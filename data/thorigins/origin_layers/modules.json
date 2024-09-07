@@ -1,0 +1,40 @@
+{
+	"order": 1,
+	"origins": [
+		{
+			"origins": ["thorigins:modules/damaged_protogen"],
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "thorigins:protogen/base/thtrackers_fixation_state",
+						"compare_to": 100,
+						"comparison": "<"
+					},
+					{
+						"type": "origins:origin",
+						"layer": "origins:origin",
+						"origin": "thorigins:protogen"
+					}
+				]
+			}
+		},
+		{
+			"origins": ["thorigins:modules/healthy_protogen"],
+			"condition": {
+				"type": "origins:resource",
+				"resource": "thorigins:protogen/base/thtrackers_fixation_state",
+				"compare_to": 100,
+				"comparison": "=="
+			}
+		}
+	],
+	"name": "origin.thorigins.protogen.module.gui",
+	"allow_random": false,
+	"auto_choose": false,
+	"missing_name": "MISSING NAME",
+	"missing_description": "MISSING DESCRIPTION",
+	"enabled": true,
+	"loading_priority": 1
+}

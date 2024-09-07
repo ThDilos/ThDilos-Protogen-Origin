@@ -1,0 +1,20 @@
+{
+	"powers": [
+		"thorigins:protogen/modules/damaged_protogen/self_fixing",
+
+		"thorigins:protogen/modules/damaged_protogen/unstable_nanites",
+		"thorigins:protogen/modules/damaged_protogen/short_circuit",
+		"thorigins:protogen/modules/damaged_protogen/damaged_storage",
+		"thorigins:protogen/modules/damaged_protogen/coordinator_failure",
+		"thorigins:protogen/modules/damaged_protogen/mulfunctioned_visor",
+		"thorigins:protogen/modules/damaged_protogen/unstable_socket",
+		"thorigins:protogen/modules/damaged_protogen/impaired_healing",
+		"thorigins:protogen/modules/damaged_protogen/nutricient_loophole",
+
+		"thorigins:protogen/modules/damaged_protogen/power_refresh"
+	],
+	"icon": "minecraft:music_disc_11",
+	"impact": 3,
+	"name": "origin.thorigins.damaged_protogen.name",
+	"description": "origin.thorigins.damaged_protogen.description"
+}

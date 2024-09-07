@@ -1,0 +1,25 @@
+{
+	"powers": [
+		"thorigins:protogen/base/thtrackers",
+		"thorigins:protogen/base/interactions",
+
+		"thorigins:protogen/base/power_array",
+		"thorigins:protogen/base/nanites_manipulation",
+		"thorigins:protogen/base/visor_enhanced_vision",
+		"thorigins:protogen/base/storage_space",
+
+		"thorigins:protogen/base/synthetic_body",
+		"thorigins:protogen/base/artificial_limbs",
+		"thorigins:protogen/base/natural_armor",
+		"thorigins:protogen/base/bioenergy",
+		"thorigins:protogen/base/overheating"
+	],
+	"icon": {
+		"amount": 1,
+		"item": "minecraft:compass",
+		"tag": "{\"CustomModelData\":159752}"
+	},
+	"impact": 3,
+	"name": "origin.thorigins.protogen.name",
+	"description": "origin.thorigins.protogen.description"
+}

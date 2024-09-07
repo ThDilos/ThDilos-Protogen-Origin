@@ -1,0 +1,131 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.power_array.name",
+	"description": "thorigins.power_array.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "origins:textures/gui/badge/active.png",
+			"text": [
+				{
+					"translate": "thorigins.power_array.tooltip0"
+				},
+				{
+					"keybind": "key.saveToolbarActivator",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.power_array.tooltip1"
+				}
+			]
+		}
+	],
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_selection_show_time",
+					"change": -1
+				}
+			]
+		}
+	},
+
+	"selection": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 5,
+		"hud_render": { "should_render": false },
+		"start_value": 0
+	},
+
+	"selection_show_time": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 100,
+		"hud_render": { "should_render": false }
+	},
+
+	"change_skill": {
+		"type": "origins:active_self",
+		"key": "key.saveToolbarActivator",
+		"cooldown": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_selection_show_time",
+					"change": 100,
+					"operation": "set"
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:and",
+								"conditions": [
+									{
+										"type": "origins:resource",
+										"resource": "*:*_selection",
+										"compare_to": 3,
+										"comparison": ">="
+									},
+									{
+										"type": "origins:or",
+										"conditions": [
+											{
+												"type": "origins:origin",
+												"layer": "thorigins:modules",
+												"origin": "thorigins:modules/damaged_protogen"
+											}
+										]
+									}
+								]
+							},
+							{
+								"type": "origins:and",
+								"conditions": [
+									{
+										"type": "origins:resource",
+										"resource": "*:*_selection",
+										"compare_to": 2,
+										"comparison": ">="
+									},
+									{
+										"type": "origins:or",
+										"conditions": [
+											{
+												"type": "origins:origin",
+												"layer": "thorigins:modules",
+												"origin": "thorigins:modules/healthy_protogen"
+											}
+										]
+									}
+								]
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_selection",
+						"change": 0,
+						"operation": "set"
+					},
+					"else_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_selection",
+						"change": 1
+					}
+				}
+			]
+		}
+	}
+}

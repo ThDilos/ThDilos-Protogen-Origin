@@ -1,0 +1,128 @@
+{
+	"type": "origins:active_self",
+	"key": "key.use",
+	"cooldown": 1,
+	"hidden": true,
+	"hud_render": { "should_render": false },
+	"entity_action": {
+		"type": "origins:if_else_list",
+		"actions": [
+			{
+				"condition": {
+					"type": "origins:origin",
+					"layer": "origins:origin",
+					"origin": "thorigins:protogen",
+					"inverted": true
+				},
+				"action": {
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.illegal_use\"}"
+				}
+			},
+			{
+				"condition": {
+					"type": "origins:resource",
+					"resource": "thorigins:protogen/base/nanites_manipulation_nanites",
+					"compare_to": 10000,
+					"comparison": "=="
+				},
+				"action": {
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.max_capacity\"}"
+				}
+			},
+			{
+				"condition": {
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:nbt",
+						"nbt": "{nanite_bottle:1}"
+					}
+				},
+				"action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:equipped_item_action",
+							"equipment_slot": "mainhand",
+							"action": {
+								"type": "origins:consume",
+								"amount": 1
+							}
+						},
+						{
+							"type": "origins:play_sound",
+							"sound": "minecraft:entity.chicken.egg",
+							"category": "players",
+							"pitch": 1.6,
+							"volume": 0.7
+						},
+						{
+							"type": "origins:play_sound",
+							"sound": "minecraft:item.bottle.empty",
+							"category": "players",
+							"pitch": 1.2,
+							"volume": 0.6
+						},
+						{
+							"type": "origins:change_resource",
+							"resource": "thorigins:protogen/base/nanites_manipulation_nanites",
+							"change": 250
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.nanites_linked\"}"
+						}
+					]
+				}
+			},
+			{
+				"condition": {
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:nbt",
+						"nbt": "{nanite_bottle:2}"
+					}
+				},
+				"action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:equipped_item_action",
+							"equipment_slot": "mainhand",
+							"action": {
+								"type": "origins:consume",
+								"amount": 1
+							}
+						},
+						{
+							"type": "origins:play_sound",
+							"sound": "minecraft:entity.chicken.egg",
+							"category": "players",
+							"pitch": 0.5,
+							"volume": 0.7
+						},
+						{
+							"type": "origins:play_sound",
+							"sound": "minecraft:item.bottle.empty",
+							"category": "players",
+							"pitch": 0.5,
+							"volume": 0.6
+						},
+						{
+							"type": "origins:change_resource",
+							"resource": "thorigins:protogen/base/nanites_manipulation_nanites",
+							"change": 2500
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.nanites_linked\"}"
+						}
+					]
+				}
+			}
+		]
+	}
+}

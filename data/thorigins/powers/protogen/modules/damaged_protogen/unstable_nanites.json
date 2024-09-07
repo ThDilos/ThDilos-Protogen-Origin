@@ -1,0 +1,74 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.damaged_protogen.unstable_nanites.name",
+	"description": "thorigins.damaged_protogen.unstable_nanites.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/x.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.nanites_manipulation.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.unstable_nanites.tooltip"
+				}
+			]
+		}
+	],
+
+	"depleted_shield_count": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:protogen/base/nanite_shield_shield_count",
+				"compare_to": 3,
+				"comparison": ">"
+			},
+			"if_action": {
+				"type": "origins:change_resource",
+				"resource": "*:protogen/base/nanite_shield_shield_count",
+				"change": 3,
+				"operation": "set"
+			}
+		}
+	},
+
+	"reduced_nanites_capacity": {
+		"type": "origins:action_over_time",
+		"interval": 20,
+		"entity_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:protogen/base/nanites_manipulation_nanites",
+				"compare_to": 5000,
+				"comparison": ">"
+			},
+			"if_action": {
+				"type": "origins:and",
+				"actions": [
+					{
+						"type": "origins:change_resource",
+						"resource": "*:protogen/base/nanites_manipulation_nanites",
+						"change": 5000,
+						"operation": "set"
+					},
+					{
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.max_capacity\"}"
+					}
+				]
+			}
+		}
+	}
+}

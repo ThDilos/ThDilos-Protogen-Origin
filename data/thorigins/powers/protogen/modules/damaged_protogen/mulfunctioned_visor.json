@@ -1,0 +1,82 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.damaged_protogen.mulfunctioned_visor.name",
+	"description": "thorigins.damaged_protogen.mulfunctioned_visor.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/vi.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.visor_enhanced_vision.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.mulfunctioned_visor.tooltip"
+				}
+			]
+		}
+	],
+
+	"random_black_out": {
+		"type": "origins:action_over_time",
+		"interval": 1200,
+		"entity_action": {
+			"type": "origins:chance",
+			"chance": 0.1,
+			"action": {
+				"type": "origins:and",
+				"actions": [
+					{
+						"type": "origins:if_else",
+						"condition": {
+							"type": "origins:power_active",
+							"power": "*:protogen/base/visor_enhanced_vision__life_detector_switch"
+						},
+						"if_action": {
+							"type": "origins:toggle",
+							"power": "*:protogen/base/visor_enhanced_vision__life_detector_switch"
+						}
+					},
+					{
+						"type": "origins:spawn_particles",
+						"particle": "minecraft:electric_spark",
+						"count": 3,
+						"offset_y": 0.6,
+						"spread": {
+							"x": 0.1,
+							"y": 0.1,
+							"z": 0.1
+						},
+						"speed": 1
+					},
+					{
+						"type": "origins:apply_effect",
+						"effect": {
+							"effect": "minecraft:darkness",
+							"duration": 100,
+							"amplifier": 0,
+							"is_ambient": true,
+							"show_icon": true,
+							"show_particles": false
+						}
+					},
+					{
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.visor_mulfunction\"}"
+					},
+					{
+						"type": "origins:grant_power",
+						"power": "*:protogen/base/energy_refresh",
+						"source": "thorigins:protogen"
+					}
+				]
+			}
+		}
+	}
+}

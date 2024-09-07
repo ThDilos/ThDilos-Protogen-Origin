@@ -1,0 +1,31 @@
+{
+	"type": "origins:modify_exhaustion",
+	"name": "thorigins.damaged_protogen.nutricient_loophole.name",
+	"description": "thorigins.damaged_protogen.nutricient_loophole.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/i.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.bioenergy.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.nutricient_loophole.tooltip"
+				}
+			]
+		}
+	],
+
+	"modifier": {
+		"value": 0.5,
+		"operation": "multiply_base",
+		"name": "Damaged Protogen Modifier"
+	}
+}

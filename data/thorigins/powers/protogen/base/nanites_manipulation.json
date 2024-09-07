@@ -1,0 +1,944 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.nanites_manipulation.name",
+	"description": "thorigins.nanites_manipulation.description",
+	"loading_priority": 10,
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/nanites_manipulation.png",
+			"text": [
+				{
+					"translate": "thorigins.generic.hold"
+				},
+				{
+					"keybind": "key.origins.primary_active",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.nanites_manipulation.tooltip0"
+				},
+				{
+					"text": "\n\n"
+				},
+				{
+					"translate": "thorigins.generic.hold"
+				},
+				{
+					"keybind": "key.origins.secondary_active",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.nanites_manipulation.tooltip1"
+				},
+				{
+					"text": "\n\n"
+				},
+				{
+					"translate": "thorigins.double_tap"
+				},
+				{
+					"keybind": "key.sneak",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.nanites_manipulation.tooltip2"
+				}
+			]
+		},
+		{
+			"type": "origins:crafting_recipe",
+			"sprite": "origins:textures/gui/badge/recipe.png",
+			"recipe": {
+				"id": "thorigins:crafting_nanites",
+				"type": "minecraft:crafting_shapeless",
+				"ingredients": [
+					{
+						"tag": "thorigins:nanite_ingredients_iron"
+					},
+					{
+						"tag": "thorigins:nanite_ingredients_copper"
+					},
+					{
+						"tag": "thorigins:nanite_ingredients_gold"
+					}
+				],
+				"result": {
+					"item": "minecraft:echo_shard"
+				}
+			},
+			"prefix": {
+				"translate": "thorigins.nanites_manipulation.tooltip3"
+			},
+			"suffix": {
+				"translate": "thorigins.nanites_manipulation.tooltip4"
+			}
+		},
+		{
+			"type": "origins:tooltip",
+			"sprite": "origins:textures/gui/badge/info.png",
+			"text": {
+				"translate": "thorigins.nanites_manipulation.tooltip5"
+			}
+		}
+	],
+
+	"selection_icon": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_bar_point.png",
+			"bar_index": 2,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "*:protogen/base/power_array_selection",
+						"compare_to": 0,
+						"comparison": "=="
+					},
+					{
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/power_array_selection_show_time",
+								"compare_to": 0,
+								"comparison": ">"
+							},
+							{
+								"type": "origins:sneaking"
+							}
+						]
+					}
+				]
+			}
+		}
+	},
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_forging",
+					"change": -1
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging",
+						"compare_to": 0,
+						"comparison": "=="
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_forging_timer",
+						"change": -2
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_fix_sword_cd",
+						"compare_to": 0,
+						"comparison": ">"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_fix_sword_cd",
+						"change": -1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging_timer",
+						"compare_to": 0,
+						"comparison": "=="
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_forging_cd",
+						"change": 0,
+						"operation": "set"
+					}
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_double_click_window",
+					"change": -1
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_nanite_infestation_cd",
+					"change": -1
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_nanite_infestation_tag_duration",
+					"change": -1
+				}
+			]
+		}
+	},
+
+	"nanites": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 10000,
+		"start_value": 3000,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_resource_bar.png",
+			"icon_index": 0,
+			"bar_index": 0
+		},
+		"max_action": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.max_capacity\"}"
+		}
+	},
+
+	"result_ingot": {
+		"type": "origins:modify_crafting",
+		"recipe": "thorigins:nanites_ingot",
+		"item_action": {
+			"type": "origins:merge_nbt",
+			"nbt": "{display:{Name:'[\"\",{\"text\":\"Bottle o\\' Nanites\",\"italic\":false,\"color\":\"green\",\"bold\":true}]',Lore:['[\"\",{\"text\":\"A Bottle of Nanites\",\"italic\":false,\"color\":\"gray\"}]','[\"\"]','[\"\",{\"text\":\"Item Ability: Consume\",\"italic\":false,\"color\":\"gold\"},{\"text\":\" \",\"italic\":false,\"color\":\"gray\"},{\"text\":\"RIGHT CLICK\",\"italic\":false,\"bold\":true,\"color\":\"yellow\"}]','[\"\",{\"text\":\"Register the nanites into your system\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"-2.5%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\"]','[\"\",{\"text\":\"Warning: It can only be used properly by Protogen!\",\"italic\":false,\"color\":\"dark_red\",\"bold\":true}]','[\"\"]','[\"\",{\"text\":\"UNCOMMON ITEM\",\"italic\":false,\"color\":\"green\",\"bold\":true}]']},\"nanite_bottle\":1,HideFlags:4,Powers: [{Slot:\"mainhand\",Hidden:1b,Negative:0b,Power:\"thorigins:protogen/nanite_bottle_power\"}],CustomModelData:159753}"
+		},
+		"result": {
+			"item": "minecraft:compass",
+			"amount": 1,
+			"tag": {
+				"nanites_bottle": "1"
+			}
+		}
+	},
+
+	"result_block": {
+		"type": "origins:modify_crafting",
+		"recipe": "thorigins:nanites_block",
+		"item_action": {
+			"type": "origins:merge_nbt",
+			"nbt": "{display:{Name:'[\"\",{\"text\":\"Titanic Bottle o\\' Nanites\",\"italic\":false,\"color\":\"blue\",\"bold\":true}]',Lore:['[\"\",{\"text\":\"A Titanic Bottle of Nanites\",\"italic\":false,\"color\":\"gray\"}]','[\"\"]','[\"\",{\"text\":\"Item Ability: Consume\",\"italic\":false,\"color\":\"gold\"},{\"text\":\" \",\"italic\":false,\"color\":\"gray\"},{\"text\":\"RIGHT CLICK\",\"italic\":false,\"bold\":true,\"color\":\"yellow\"}]','[\"\",{\"text\":\"Register the nanites into your system\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"-25%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\"]','[\"\",{\"text\":\"Warning: It can only be used properly by Protogen!\",\"italic\":false,\"color\":\"dark_red\",\"bold\":true}]','[\"\"]','[\"\",{\"text\":\"RARE ITEM\",\"italic\":false,\"color\":\"blue\",\"bold\":true}]']},\"nanite_bottle\":2,HideFlags:4,Powers: [{Slot:\"mainhand\",Hidden:1b,Negative:0b,Power:\"thorigins:protogen/nanite_bottle_power\"}],CustomModelData:159754}"
+		},
+		"result": {
+			"item": "minecraft:compass",
+			"amount": 1,
+			"tag": {
+				"nanites_bottle": "2"
+			}
+		}
+	},
+
+	"forging_timer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 200,
+		"min_action": {
+			"type": "origins:grant_power",
+			"power": "*:protogen/base/energy_refresh",
+			"source": "thorigins:protogen"
+		},
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_resource_bar.png",
+			"icon_index": 0,
+			"bar_index": 1,
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:*_forging_timer",
+				"compare_to": 0,
+				"comparison": ">"
+			}
+		},
+		"max_action": {
+			"type": "origins:execute_command",
+			"command": "/playsound minecraft:block.anvil.use player @s ~ ~ ~ 0.4 2"
+		}
+	},
+
+	"forging": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 10,
+		"min_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "/playsound minecraft:block.beacon.deactivate player @s ~ ~ ~ 0.6 1.6"
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_status",
+					"change": 0,
+					"operation": "set"
+				}
+			]
+		},
+		"max_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:*_forging_timer",
+				"compare_to": 10,
+				"comparison": "<"
+			},
+			"if_action": {
+				"type": "origins:grant_power",
+				"power": "*:protogen/base/energy_refresh",
+				"source": "thorigins:protogen"
+			}
+		},
+		"start_value": 0,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"forging_cd": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 0,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"forging_sfx": {
+		"type": "origins:action_over_time",
+		"interval": 5,
+		"entity_action": {
+			"type": "origins:execute_command",
+			"command": "/playsound minecraft:block.beacon.ambient player @s ~ ~ ~ 0.7 2"
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_forging_timer",
+					"compare_to": 20,
+					"comparison": ">"
+				},
+				{
+					"type": "origins:and",
+					"conditions": [
+						{
+							"type": "origins:resource",
+							"resource": "*:*_forging_cd",
+							"compare_to": 0,
+							"comparison": "=="
+						},
+						{
+							"type": "origins:resource",
+							"resource": "*:*_forging",
+							"compare_to": 0,
+							"comparison": ">"
+						}
+					]
+				}
+			]
+		}
+	},
+
+	"status": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 3,
+		"hud_render": { "should_render": false }
+	},
+
+	"fix_sword_cd": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 100,
+		"start_value": 0,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"nanite_sword": {
+		"type": "origins:active_self",
+		"key": {
+			"key": "key.origins.primary_active",
+			"continuous": true
+		},
+		"cooldown": 1,
+		"hud_render": {
+			"should_render": false
+		},
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:food_level",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/bioenergy_energy_level",
+								"compare_to": 7,
+								"comparison": ">"
+							}
+						]
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:protogen/modules/damaged_protogen/self_fixing_toggle_fixing"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.while_fixing\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_nanites",
+						"compare_to": 3000,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging_timer",
+						"compare_to": 200,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging",
+								"change": 10
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging_timer",
+								"change": 4
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_status",
+								"change": 1,
+								"operation": "set"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging_timer",
+						"compare_to": 200,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging_cd",
+								"change": 1
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_nanites",
+								"change": -3000
+							},
+							{
+								"type": "origins:if_else",
+								"condition": {
+									"type": "origins:origin",
+									"layer": "thorigins:modules",
+									"origin": "thorigins:modules/damaged_protogen"
+								},
+								"if_action": {
+									"type": "origins:execute_command",
+									"command": "/give @p golden_sword{display:{Name:'[\"\",{\"text\":\"Fractured Nanite Sword\",\"italic\":false,\"color\":\"blue\",\"bold\":true}]',Lore:['[\"\"]','[\"\",{\"text\":\"Created with unstable nanites\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"It can slice through almost any material\",\"italic\":false,\"color\":\"gray\"}]','[\"\"]','[\"\",{\"text\":\"Item Ability: Nanite Infusion \",\"italic\":false,\"color\":\"gold\"},{\"text\":\"HOLD RIGHT CLICK\",\"italic\":false,\"bold\":true,\"color\":\"yellow\"}]','[\"\",{\"text\":\"Infuse nanites into the sword to extend its lifespan\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"5%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\",{\"text\":\"Cooldown: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"5s\",\"italic\":false,\"color\":\"green\"}]','[\"\"]','[{\"text\":\"Item Ability: Salvaging \",\"color\":\"gold\",\"italic\":false},{\"text\":\"SNEAK + HOLD PRIMARY KEY [G]\",\"italic\":false,\"color\": \"yellow\",\"bold\":true}]','[\"\",{\"text\":\"Disintegrate this sword and repurpose part of the nanites\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"-20%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\"]','[\"\",{\"text\":\"Warning: It can only be used properly by Protogen!\",\"italic\":false,\"color\":\"dark_red\",\"bold\":true}]','[\"\"]','[\"\",{\"text\":\"RARE SWORD\",\"italic\":false,\"color\":\"blue\",\"bold\":true}]']},Enchantments:[{lvl:6,id:sharpness},{lvl:3,id:loyalty},{lvl:1,id:looting},{lvl:1,id:sweeping}],\"nanite_sword_lvl\":1,HideFlags:4,Powers: [{Slot:\"mainhand\",Hidden:1b,Negative:0b,Power:\"thorigins:protogen/nanite_sword_power\"}],Damage:0,CustomModelData:159753}"
+								},
+								"else_action": {
+									"type": "origins:execute_command",
+									"command": "/give @p golden_sword{display:{Name:'[\"\",{\"text\":\"Synchronized Nanite Sword\",\"italic\":false,\"color\":\"dark_purple\",\"bold\":true}]',Lore:['[\"\"]','[\"\",{\"text\":\"Forged with calibrated nanites.\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"It effortlessly cuts through even the toughest material with precision and stability.\",\"italic\":false,\"color\":\"gray\"}]','[\"\"]','[\"\",{\"text\":\"Item Ability: Nanite Infusion \",\"italic\":false,\"color\":\"gold\"},{\"text\":\"HOLD RIGHT CLICK\",\"italic\":false,\"bold\":true,\"color\":\"yellow\"}]','[\"\",{\"text\":\"Infuse nanites into the sword to extend its lifespan\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"5%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\",{\"text\":\"Cooldown: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"5s\",\"italic\":false,\"color\":\"green\"}]','[\"\"]','[{\"text\":\"Item Ability: Nanite Infestation \",\"color\":\"gold\",\"italic\":false},{\"text\":\"CLICK PRIMARY KEY [G]\",\"italic\":false,\"color\": \"yellow\",\"bold\":true}]','[\"\",{\"text\":\"Inject nanites for continuous damage to body and equipments with your next attack\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"2%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\",{\"text\":\"Cooldown: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"3s\",\"italic\":false,\"color\":\"green\"}]','[\"\",{\"text\":\"Effect Range: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"128 Blocks\",\"italic\":false,\"color\":\"aqua\"}]','[\"\"]','[{\"text\":\"Item Ability: Salvaging \",\"color\":\"gold\",\"italic\":false},{\"text\":\"SNEAK + HOLD PRIMARY KEY [G]\",\"italic\":false,\"color\": \"yellow\",\"bold\":true}]','[\"\",{\"text\":\"Disintegrate this sword and repurpose part of the nanites\",\"italic\":false,\"color\":\"gray\"}]','[\"\",{\"text\":\"Nanite Cost: \",\"italic\":false,\"color\":\"dark_gray\"},{\"text\":\"-20%\",\"italic\":false,\"color\":\"dark_aqua\"}]','[\"\"]','[\"\",{\"text\":\"Warning: It can only be used properly by Protogen!\",\"italic\":false,\"color\":\"dark_red\",\"bold\":true}]','[\"\"]','[\"\",{\"text\":\"EPIC SWORD\",\"italic\":false,\"color\":\"dark_purple\",\"bold\":true}]']},Enchantments:[{lvl:10,id:sharpness},{lvl:10,id:unbreaking},{lvl:3,id:loyalty},{lvl:1,id:looting},{lvl:1,id:sweeping}],\"nanite_sword_lvl\":2,HideFlags:4,Powers:[{Slot:\"mainhand\",Hidden:1b,Negative:0b,Power:\"thorigins:protogen/nanite_sword_power\"}],CustomModelData:159754}"
+								}
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.forged\"}"
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_status",
+					"compare_to": 1,
+					"comparison": "<="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/power_array_selection",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_forging_cd",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:1}"
+							},
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:2}"
+							}
+						]
+					},
+					"inverted": true
+				}
+			]
+		}
+	},
+
+	"nanite_infestation_count": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_bar_point.png",
+			"bar_index": 1,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:equipped_item",
+						"equipment_slot": "mainhand",
+						"item_condition": {
+							"type": "origins:nbt",
+							"nbt": "{nanite_sword_lvl:2}"
+						}
+					},
+					{
+						"type": "origins:resource",
+						"resource": "*:*_nanite_infestation_count",
+						"compare_to": 0,
+						"comparison": ">"
+					}
+				]
+			}
+		}
+	},
+
+	"nanite_infestation_cd": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 60,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_resource_bar.png",
+			"icon_index": 0,
+			"bar_index": 2,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:equipped_item",
+						"equipment_slot": "mainhand",
+						"item_condition": {
+							"type": "origins:nbt",
+							"nbt": "{nanite_sword_lvl:2}"
+						}
+					},
+					{
+						"type": "origins:resource",
+						"resource": "*:*_nanite_infestation_cd",
+						"compare_to": 0,
+						"comparison": ">"
+					}
+				]
+			}
+		}
+	},
+
+	"nanite_infestation_tag_duration": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1100,
+		"start_value": 110,
+		"min_action": {
+			"type": "origins:execute_command",
+			"command": "/tag @s remove nanite_controller"
+		},
+		"hud_render": { "should_render": false }
+	},
+
+	"nanite_shield": {
+		"type": "origins:active_self",
+		"key": {
+			"key": "key.origins.secondary_active",
+			"continuous": true
+		},
+		"cooldown": 1,
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:food_level",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/bioenergy_energy_level",
+								"compare_to": 7,
+								"comparison": ">"
+							}
+						]
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:protogen/modules/damaged_protogen/self_fixing_toggle_fixing"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.while_fixing\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanite_shield_shield_count",
+						"compare_to": 5,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.shield_full\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_nanites",
+						"compare_to": 1000,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging_timer",
+						"compare_to": 200,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_status",
+								"change": 2,
+								"operation": "set"
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging_timer",
+								"change": 4
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging",
+								"change": 10,
+								"operation": "set"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_forging_timer",
+						"compare_to": 200,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_forging_cd",
+								"change": 1
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_nanites",
+								"change": -1000
+							},
+							{
+								"type": "origins:if_else",
+								"condition": {
+									"type": "origins:power",
+									"power": "thorigins:protogen/base/nanite_shield"
+								},
+								"if_action": {
+									"type": "origins:change_resource",
+									"resource": "*:protogen/base/nanite_shield_shield_count",
+									"change": 5,
+									"operation": "set"
+								},
+								"else_action": {
+									"type": "origins:grant_power",
+									"power": "thorigins:protogen/base/nanite_shield",
+									"source": "thorigins:temp"
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:or",
+					"conditions": [
+						{
+							"type": "origins:resource",
+							"resource": "*:*_status",
+							"compare_to": 0,
+							"comparison": "=="
+						},
+						{
+							"type": "origins:resource",
+							"resource": "*:*_status",
+							"compare_to": 2,
+							"comparison": "=="
+						}
+					]
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/power_array_selection",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_forging_cd",
+					"compare_to": 0,
+					"comparison": "=="
+				}
+			]
+		}
+	},
+
+	"nanite_aided_healing": {
+		"type": "origins:modify_healing",
+		"modifier": {
+			"value": 0.25,
+			"operation": "multiply_total",
+			"name": "Protogen Nanite Healing"
+		},
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_nanites",
+			"compare_to": 0,
+			"comparison": ">"
+		}
+	},
+
+	"shift_detector": {
+		"type": "origins:active_self",
+		"key": "key.sneak",
+		"cooldown": 1,
+		"hud_render": { "should_render": false },
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_emergency_healing",
+					"change": 1
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_double_click_window",
+					"change": 5
+				}
+			]
+		}
+	},
+
+	"double_click_window": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 5,
+		"min_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_emergency_healing",
+			"change": 0,
+			"operation": "set"
+		},
+		"hud_render": { "should_render": false }
+	},
+
+	"emergency_healing": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 2,
+		"max_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_emergency_healing",
+					"change": 0,
+					"operation": "set"
+				},
+				{
+					"type": "origins:if_else_list",
+					"actions": [
+						{
+							"condition": {
+								"type": "origins:or",
+								"conditions": [
+									{
+										"type": "origins:food_level",
+										"compare_to": 0,
+										"comparison": "=="
+									},
+									{
+										"type": "origins:resource",
+										"resource": "*:protogen/base/bioenergy_energy_level",
+										"compare_to": 8,
+										"comparison": ">"
+									}
+								]
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:relative_health",
+								"compare_to": 0.5,
+								"comparison": ">"
+							},
+							"action": {
+								"type": "origins:nothing"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_nanites",
+								"compare_to": 100,
+								"comparison": "<"
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:power",
+								"power": "thorigins:protogen/base/emergency_healing"
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar \"Error: The Protocol is already initiated!\""
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:constant",
+								"value": true
+							},
+							"action": {
+								"type": "origins:grant_power",
+								"power": "thorigins:protogen/base/emergency_healing",
+								"source": "thorigins:protogen"
+							}
+						}
+					]
+				}
+			]
+		},
+		"hud_render": { "should_render": false }
+	},
+
+	"respawn_reset": {
+		"type": "origins:action_on_callback",
+		"entity_action_respawned": {
+			"type": "origins:change_resource",
+			"resource": "*:*_nanites",
+			"change": 0,
+			"operation": "set"
+		}
+	}
+}

@@ -1,0 +1,66 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.bioenergy.name",
+	"description": "thorigins.bioenergy.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/bioenergy.png",
+			"text": {
+				"translate": "thorigins.bioenergy.tooltip0"
+			}
+		},
+		{
+			"type": "origins:tooltip",
+			"sprite": "origins:textures/gui/badge/info.png",
+			"text": {
+				"translate": "thorigins.bioenergy.tooltip1"
+			}
+		}
+	],
+
+	"perfect_digestion": {
+		"type": "origins:modify_food",
+		"prevent_effects": true,
+		"food_modifier": {
+			"operation": "multiply_total",
+			"value": 0.5,
+			"name": "Protogen Perfect Digestion"
+		},
+		"saturation_modifier": {
+			"operation": "multiply_total",
+			"value": 0.5,
+			"name": "Protogen Perfect Digestion"
+		}
+	},
+
+	"energy_level": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 10,
+		"start_value": 0,
+		"hud_render": { "should_render": false }
+	},
+
+	"energy_needs": {
+		"type": "origins:modify_exhaustion",
+		"modifier": {
+			"resource": "*:*_energy_level",
+			"operation": "multiply_base",
+			"value": 0,
+			"modifier": {
+				"value": -0.95,
+				"operation": "multiply_base"
+			}
+		}
+	},
+
+	"respawn_reset": {
+		"type": "origins:action_on_callback",
+		"entity_action_respawned": {
+			"type": "origins:grant_power",
+			"power": "*:protogen/base/energy_refresh",
+			"source": "thorigins:protogen"
+		}
+	}
+}

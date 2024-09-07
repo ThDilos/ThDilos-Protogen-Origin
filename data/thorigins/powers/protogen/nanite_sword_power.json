@@ -1,0 +1,501 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"reduced_damage_and_durability": {
+		"type": "origins:modify_damage_dealt",
+		"damage_condition": {
+			"type": "origins:projectile",
+			"inverted": true
+		},
+		"modifier": {
+			"value": 1,
+			"operation": "set_total"
+		},
+		"condition": {
+			"type": "origins:origin",
+			"layer": "origins:origin",
+			"origin": "thorigins:protogen",
+			"inverted": true
+		},
+		"self_action": {
+			"type": "origins:equipped_item_action",
+			"equipment_slot": "mainhand",
+			"action": {
+				"type": "origins:damage",
+				"amount": 1,
+				"ignore_unbreaking": false
+			}
+		}
+	},
+
+	"fix_sword": {
+		"type": "origins:active_self",
+		"key": {
+			"key": "key.use",
+			"continuous": true
+		},
+		"entity_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:origin",
+				"layer": "origins:origin",
+				"origin": "thorigins:protogen",
+				"inverted": true
+			},
+			"if_action": {
+				"type": "origins:execute_command",
+				"command": "/title @s actionbar {\"translate\":\"thorigins.illegal_use\"}"
+			},
+			"else_action": {
+				"type": "origins:if_else_list",
+				"actions": [
+					{
+						"condition": {
+							"type": "origins:resource",
+							"resource": "*:protogen/base/nanites_manipulation_forging_cd",
+							"compare_to": 0,
+							"comparison": ">"
+						},
+						"action": {
+							"type": "origins:nothing"
+						}
+					},
+					{
+						"condition": {
+							"type": "origins:food_level",
+							"compare_to": 0,
+							"comparison": "=="
+						},
+						"action": {
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+						}
+					},
+					{
+						"condition": {
+							"type": "origins:power_active",
+							"power": "*:protogen/modules/damaged_protogen/self_fixing_toggle_fixing"
+						},
+						"action": {
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.while_fixing\"}"
+						}
+					},
+					{
+						"condition": {
+							"type": "origins:resource",
+							"resource": "*:protogen/base/nanites_manipulation_nanites",
+							"compare_to": 500,
+							"comparison": "<"
+						},
+						"action": {
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+						}
+					},
+					{
+						"condition": {
+							"type": "origins:equipped_item",
+							"equipment_slot": "mainhand",
+							"item_condition": {
+								"type": "origins:durability",
+								"compare_to": 32,
+								"comparison": "=="
+							}
+						},
+						"action": {
+							"type": "origins:execute_command",
+							"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_sword.no_need_to_fix\"}"
+						}
+					},
+					{
+						"condition": {
+							"type": "origins:constant",
+							"value": true
+						},
+						"action": {
+							"type": "origins:if_else_list",
+							"actions": [
+								{
+									"condition": {
+										"type": "origins:resource",
+										"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+										"compare_to": 200,
+										"comparison": "<"
+									},
+									"action": {
+										"type": "origins:and",
+										"actions": [
+											{
+												"type": "origins:change_resource",
+												"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+												"change": 4
+											},
+											{
+												"type": "origins:change_resource",
+												"resource": "*:protogen/base/nanites_manipulation_forging",
+												"change": 10,
+												"operation": "set"
+											},
+											{
+												"type": "origins:change_resource",
+												"resource": "*:*_status",
+												"change": 3,
+												"operation": "set"
+											}
+										]
+									}
+								},
+								{
+									"condition": {
+										"type": "origins:resource",
+										"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+										"compare_to": 200,
+										"comparison": "=="
+									},
+									"action": {
+										"type": "origins:and",
+										"actions": [
+											{
+												"type": "origins:change_resource",
+												"resource": "*:protogen/base/nanites_manipulation_forging_cd",
+												"change": 1
+											},
+											{
+												"type": "origins:change_resource",
+												"resource": "*:protogen/base/nanites_manipulation_nanites",
+												"change": -500
+											},
+											{
+												"type": "origins:equipped_item_action",
+												"equipment_slot": "mainhand",
+												"action": {
+													"type": "origins:damage",
+													"amount": -50
+												}
+											},
+											{
+												"type": "origins:change_resource",
+												"resource": "*:protogen/base/nanites_manipulation_fix_dagger_cd",
+												"change": 100
+											},
+											{
+												"type": "origins:execute_command",
+												"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_sword.fix\"}"
+											},
+											{
+												"type": "origins:execute_command",
+												"command": "/playsound minecraft:entity.experience_orb.pickup player @s ~ ~ ~ 0.5 1.6"
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		},
+		"condition": {
+			"type": "origins:or",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_status",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_status",
+					"compare_to": 3,
+					"comparison": "=="
+				}
+			]
+		}
+	},
+
+	"nanite_infestation_trigger": {
+		"type": "origins:active_self",
+		"key": "key.origins.primary_active",
+		"cooldown": 1,
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:protogen/modules/damaged_protogen/self_fixing_toggle_fixing"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.while_fixing\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_nanites",
+						"compare_to": 200,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_count",
+						"compare_to": 1,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.skill_activated\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:constant",
+						"value": true
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_count",
+								"change": 1
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanites",
+								"change": -200
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_infestation.activate\"}"
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_cd",
+								"change": 60
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:nbt",
+						"nbt": "{nanite_sword_lvl:2}"
+					}
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_cd",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:sneaking",
+					"inverted": true
+				}
+			]
+		}
+	},
+
+	"nanite_infestation_effect": {
+		"type": "origins:action_on_hit",
+		"cooldown": 1,
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "player"
+		},
+		"bientity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:actor_action",
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_count",
+								"change": -1
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_tag_duration",
+								"change": 110
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/tag @s add nanite_controller"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:target_action",
+					"action": {
+						"type": "origins:if_else",
+						"condition": {
+							"type": "origins:power",
+							"power": "thorigins:protogen/nanite_infestation"
+						},
+						"if_action": {
+							"type": "origins:change_resource",
+							"resource": "thorigins:protogen/nanite_infestation_duration",
+							"change": 100
+						},
+						"else_action": {
+							"type": "origins:grant_power",
+							"power": "thorigins:protogen/nanite_infestation",
+							"source": "thorigins:temp"
+						}
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_nanite_infestation_count",
+					"compare_to": 1,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:nbt",
+						"nbt": "{nanite_sword_lvl:2}"
+					}
+				}
+			]
+		},
+		"hud_render": { "should_render": false }
+	},
+
+	"salvaging": {
+		"type": "origins:active_self",
+		"key": {
+			"key": "key.origins.primary_active",
+			"continuous": true
+		},
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:food_level",
+						"compare_to": 0,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+						"compare_to": 200,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+								"change": 4
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_forging",
+								"change": 10,
+								"operation": "set"
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_status",
+								"change": 1,
+								"operation": "set"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_forging_timer",
+						"compare_to": 200,
+						"comparison": "=="
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_forging_cd",
+								"change": 1
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:protogen/base/nanites_manipulation_nanites",
+								"change": 2000
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.nanites_linked\"}"
+							},
+							{
+								"type": "origins:replace_inventory",
+								"slot": "weapon.mainhand",
+								"inventory_type": "inventory",
+								"stack": {
+									"item": "minecraft:air"
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_forging_cd",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/nanites_manipulation_status",
+					"compare_to": 1,
+					"comparison": "<="
+				},
+				{
+					"type": "origins:sneaking"
+				}
+			]
+		}
+	}
+}

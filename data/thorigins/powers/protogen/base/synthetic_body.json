@@ -1,0 +1,87 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.synthetic_body.name",
+	"description": "thorigins.synthetic_body.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/synthetic_body.png",
+			"text": {
+				"translate": "thorigins.synthetic_body.tooltip"
+			}
+		}
+	],
+
+	"size_adjustments": {
+		"type": "origins:action_on_callback",
+		"entity_action_gained": {
+			"type": "origins:delay",
+			"ticks": 1,
+			"action": {
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:*_size_modified",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				"if_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:change_resource",
+							"resource": "*:*_size_modified",
+							"change": 1
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale persist set true @s"
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale easing set pehkui:height pehkui:exponential_out @s"
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale multiply pehkui:width 0.85 @s"
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale multiply pehkui:height 0.85 @s"
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale multiply pehkui:drops 0.85 @s"
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/scale multiply pehkui:visibility 0.85 @s"
+						}
+					]
+				}
+			}
+		},
+		"entity_action_lost": {
+			"type": "origins:execute_command",
+			"command": "/scale reset @s"
+		}
+	},
+
+	"size_modified": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 0,
+		"hud_render": { "should_render": false }
+	},
+
+	"increased_health": {
+		"type": "origins:attribute",
+		"update_health": true,
+		"modifier": {
+			"attribute": "minecraft:generic.max_health",
+			"operation": "addition",
+			"value": 12
+		}
+	}
+}

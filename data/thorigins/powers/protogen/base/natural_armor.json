@@ -1,0 +1,69 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.natural_armor.name",
+	"description": "thorigins.natural_armor.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/natural_armor.png",
+			"text": {
+				"translate": "thorigins.natural_armor.tooltip"
+			}
+		}
+	],
+
+	"body_armor": {
+		"type": "origins:attribute",
+		"modifiers": [
+			{
+				"attribute": "minecraft:generic.armor",
+				"operation": "addition",
+				"value": 8,
+				"name": "Protogen Armor Plate"
+			},
+			{
+				"attribute": "minecraft:generic.armor_toughness",
+				"operation": "addition",
+				"value": 8,
+				"name": "Protogen Armor Plate"
+			}
+		]
+	},
+
+	"fire_vulnerablility": {
+		"type": "origins:modify_damage_taken",
+		"damage_condition": {
+			"type": "origins:or",
+			"conditions": [
+				{
+					"type": "origins:name",
+					"name": "onFire"
+				},
+				{
+					"type": "origins:name",
+					"name": "onFire.player"
+				},
+				{
+					"type": "origins:name",
+					"name": "inFire"
+				},
+				{
+					"type": "origins:name",
+					"name": "inFire.player"
+				},
+				{
+					"type": "origins:name",
+					"name": "lava"
+				},
+				{
+					"type": "origins:name",
+					"name": "lava.player"
+				}
+			]
+		},
+		"modifier": {
+			"value": 0.5,
+			"operation": "multiply_total"
+		}
+	}
+}

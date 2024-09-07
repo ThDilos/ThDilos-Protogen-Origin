@@ -1,0 +1,151 @@
+{
+	"death.attack.thorigins:nanite": "%s's internal was decomposed into elementary matters by nanites swarm from %s",
+	"death.attack.thorigins:nanite.item": "%s's body was disintegrated by %s's nanites swarm from %s",
+	"thorigins.illegal_use": "§cYou cannot use this skill!",
+
+	"thorigins.generic.press": "§7When activated, §fpress§r §7[",
+	"thorigins.generic.hold": "§7When activated, §fhold§r §7[",
+	"thorigins.double_tap": "§fDouble tap§r §7[",
+
+	"thorigins.not_enough_nanites": "§c§lInsufficient Nanites",
+	"thorigins.no_power": "§c§lInsufficient Power",
+	"thorigins.skill_activated": "§9§lProtocol Already Initiated",
+
+	"origin.thorigins.protogen.name": "Protogen",
+	"origin.thorigins.protogen.description": "Protogens are 40% artificial cyborg, created for space exploration. Weakness of Flesh shall not contain them from the boundless horizon.",
+
+	"thorigins.power_array.name": "§2Power Array",
+	"thorigins.power_array.description": "Select the activated skill to use.",
+	"thorigins.power_array.tooltip0": "§7Press [",
+	"thorigins.power_array.tooltip1": "§7] to select an activated skill",
+
+	"thorigins.nanites_manipulation.name": "§6Nanites Manipulation",
+	"thorigins.nanites_manipulation.description": "Being a special Protogen, you can command your nanites to create, or destroy.",
+	"thorigins.nanites_manipulation.tooltip0": "§7] to forge a §dNanite Sword\n§3Nanite Cost: 30%\n§9Power Load: §e3u",
+	"thorigins.nanites_manipulation.tooltip1": "§7] to form §dNanite Shields\n§3Nanite Cost: 10%\n§9Power Load: §e3u",
+	"thorigins.nanites_manipulation.tooltip2": "§7] to initiate §dEmergency Healing Protocol\n§3Nanite Cost: 1% per Heal\n§bThreshold: < 50% Health\n§cSide Effect: Hunger\n§9Power Load: §a2u",
+	"thorigins.nanites_manipulation.tooltip3": "Nanites Recipe",
+	"thorigins.nanites_manipulation.tooltip4": "Crafting Type: Shapeless",
+	"thorigins.nanites_manipulation.tooltip5": "[§a+§r] Nanites-Aided Natural Regeneration, able to heal faster",
+	"thorigins.forged": "§3§lForging Successful",
+	"thorigins.nanites_linked": "§3§lNew Nanites Linked",
+	"thorigins.nanite_sword.fix": "§3§lNanite Sword Refreshed",
+	"thorigins.nanite_sword.no_need_to_fix": "§9§lSword is already at Full Working Condition",
+	"thorigins.nanite_infestation.activate": "§3§lNanite Infestation Activated",
+	"thorigins.nanite_infestation.start": "§9§lYou felt a tingling sensation from your fresh wound...",
+	"thorigins.nanite_infestation.end": "§9§lThe nanites fell off of you",
+	"thorigins.nanite_shield.activated": "§3§lNanite Shield Activated",
+	"thorigins.nanite_shield.depleted": "§9§lNanite Shield Depleted",
+	"thorigins.shield_full": "§9§lShield is already at Full Working Condition",
+	"thorigins.emergency_healing.activated": "§9§lEmergency Medical Procedure Initiated",
+	"thorigins.emergency_healing.aborted": "§c§lInsufficient Nanites, Emergency Medical Procedure Aborted",
+	"thorigins.emergency_healing.completed": "§3§lEmergency Medical Procedure Concluded",
+	"thorigins.max_capacity": "§9§lMax Capacity Reached",
+
+	"thorigins.visor_enhanced_vision.name": "§6Visor Enhanced Vision",
+	"thorigins.visor_enhanced_vision.description": "Your visor helps you to observe the world better.",
+	"thorigins.visor_enhanced_vision.tooltip0": "§7] to toggle §dLife Detection\n§9Power Load: §a2u",
+	"thorigins.visor_enhanced_vision.tooltip1": "§7] to toggle §dNight Vision\n§9Power Load: §21u",
+	"thorigins.night_vision_on": "§9§lNight Vision §3ON",
+	"thorigins.night_vision_off": "§9§lNight Vision §3OFF",
+	"thorigins.life_detection_on": "§9§lLife Detection §3ON",
+	"thorigins.life_detection_off": "§9§lLife Detection §3OFF",
+
+	"thorigins.storage_space.name": "§6Storage Space",
+	"thorigins.storage_space.description": "You have a built-in storage space to store items.",
+	"thorigins.storage_space.tooltip": "§7] to open up your storage space",
+	"thorigins.storage_space.title": "Storage Space",
+
+	"thorigins.synthetic_body.name": "§aSynthetic Body",
+	"thorigins.synthetic_body.description": "You are shorter than human being, but have more endurance.",
+	"thorigins.synthetic_body.tooltip": "[§e~§r] Shrinked sizes \n[§a+§r] Increased Max Health",
+
+	"thorigins.artificial_limbs.name": "§aArtificial Limbs",
+	"thorigins.artificial_limbs.description": "Your limbs are artificially crafted for you to better navigate the environment.",
+	"thorigins.artificial_limbs.tooltip": "[§a+§r] Ignore fall distance < 12 blocks\n[§a+§r] Crouch when falling will negate most of the fall damage\n[§a+§r] Faster mining speed\n[§a+§r] Faster swimming speed",
+
+	"thorigins.natural_armor.name": "§eNatural Armor",
+	"thorigins.natural_armor.description": "You are harder than steel, and fluffy at the same time.",
+	"thorigins.natural_armor.tooltip": "[§a+§r] Your artificial armor plates provide extra defence\n[§c-§r] Your natural fur makes you vulnerable to fire",
+
+	"thorigins.bioenergy.name": "§eBioenergy",
+	"thorigins.bioenergy.description": "Your nanties help you fully digest any foods you eat, convert part of them into energy to power your artificial components.",
+	"thorigins.bioenergy.tooltip0": "[§e~§r] Perfect Digestion:\n 1. All Foods provide more food points & saturation\n 2. Not receiving any effects from eating\n[§c-§r] The more skills you activated, the more food you'll need to satisfy the need for energy",
+	"thorigins.bioenergy.tooltip1": "§9Max Power Load Allowed: 10u",
+
+	"thorigins.overheating.name": "§cOverheating",
+	"thorigins.overheating.description": "Your components will mulfunction if you don't keep yourself cool.",
+	"thorigins.overheating.tooltip": "[§e~§r] Your surrounding environment, power usage, movement... will build up heat in your body\n[§c-§r] Your damage dealt will be muffled as your temperature rises\n[§c-§r] Your synthetic parts will mulfunction in extreme temperature\n[*] Staying hydrated / holding ice will effectively cool yourself down",
+	"thorigins.overheating.warning_300": "§e§lWarning: High Temperature",
+	"thorigins.overheating.warning_400": "§c§lWarning: Critical Components Overheating",
+
+	"thorigins.proto.petted": "You've being petted by ",
+	"thorigins.proto.heated": "You are scorched by this protogen's hot surface",
+
+	"origin.thorigins.protogen.module.gui": "Specialised Module",
+
+	"origin.thorigins.damaged_protogen.name": "Damaged",
+	"origin.thorigins.damaged_protogen.description": "Your body was severely damaged from your last landing on this foreign planet. Be aware of your surroundings.",
+
+	"thorigins.damaged_protogen.tooltip.generic_0": "This power will replace the effect(s) from [",
+	"thorigins.damaged_protogen.tooltip.generic_1": "] in the following way:\n",
+
+	"thorigins.damaged_protogen.self_fixing.name": "§6Self Fixing",
+	"thorigins.damaged_protogen.self_fixing.description": "An emergency protocol to repair significant damage.",
+	"thorigins.self_fixing.tooltip": "§7] to fix your body with nanites\n§3Nanite Cost: 50%\n§9Power Load: §65u",
+	"thorigins.self_fixing.info": "[*] Interruptions to the maintenance will cause it to halt completely\n[*] Numbers beside the skills below indicates at which fix, the respective side effect will disappear\n[§c/§r] Reduced Max Health",
+	"thorigins.damaged_protogen.while_fixing": "§c§lSelf-Repairing in Progress",
+	"thorigins.damaged_protogen.self_fix.move": "§c§lMovement Detected, Self-Fixing Aborted",
+	"thorigins.damaged_protogen.self_fix.on": "§3§lSelf-Fixing Initiated",
+	"thorigins.damaged_protogen.self_fix.off": "§c§lSelf-Fixing Cancelled",
+	"thorigins.damaged_protogen.self_fix.damage": "§c§lExternal Damage Detected, Self-Fixing Aborted",
+	"thorigins.damaged_protogen.self_fix.complete": "§3§lSelf-Fixing Completed ",
+
+	"thorigins.damaged_protogen.unstable_nanites.name": "§cUnstable Nanites",
+	"thorigins.damaged_protogen.unstable_nanites.description": "Your nanites control module is damaged.",
+	"thorigins.damaged_protogen.max_capacity": "§9§lMax Capacity (50%) Reached",
+	"thorigins.damaged_protogen.unstable_nanites.tooltip": "[§c/§r] Halved Nanites Capacity \n[§c/§r] Reduced Nanite Shield Counts \n[§c/§r] Inferior Nanite Sword",
+
+	"thorigins.damaged_protogen.short_circuit.name": "§cShort Circuit",
+	"thorigins.damaged_protogen.short_circuit.description": "Your body armor and insulation layer is cracked, vulnerable circuits are exposed to the outsides.",
+	"thorigins.watered": "§c§lWarning: Waterproof Layer Compromised",
+	"thorigins.damaged_protogen.short_circuit.tooltip": "[§c/§r] Armor Damaged \n[§c-§r] Cannot touch water",
+
+	"thorigins.damaged_protogen.damaged_storage.name": "§cDamaged Storage",
+	"thorigins.damaged_protogen.damaged_storage.description": "The storage space was punctured through, there is a giant hole leaking out.",
+	"thorigins.damaged_protogen.damaged_storage.title": "Damaged Storage Space",
+	"thorigins.damaged_protogen.damaged_storage.tooltip": "[§c/§r] Reduced storage slots available",
+
+	"thorigins.damaged_protogen.coordinator_failure.name": "§cCoordinator Failure",
+	"thorigins.damaged_protogen.coordinator_failure.description": "Coordinator was damaged, you can't control your movement fluidly.",
+	"thorigins.damaged_protogen.coordinator_failure.tooltip": "[§c/§r] No fall protection\n[§c/§r] Mining speed reduced\n[§c/§r] Swiming speed reduced\n[§c-§r] Movement speed reduced",
+
+	"thorigins.damaged_protogen.mulfunctioned_visor.name": "§cMulfunctioned Visor",
+	"thorigins.damaged_protogen.mulfunctioned_visor.description": "An unknown error occured in your visor's neuro-transmission link. At least it's better than a crack in the inner visor.",
+	"thorigins.damaged_protogen.visor_mulfunction": "§cException in thread \"display\" protogen.§knah§r§l.§kidwin§r§l: at Visor.display(File.display:304)",
+	"thorigins.damaged_protogen.mulfunctioned_visor.tooltip": "[§c/§r] Night Vision Disabled\n[§c-§r] Visor randomly encounters an error",
+
+	"thorigins.damaged_protogen.unstable_socket.name": "§cUnstable Socket",
+	"thorigins.damaged_protogen.unstable_socket.description": "Sockets are essential to connect all your exchangable limbs. Your left arm socket however, was not functioning properly.",
+	"thorigins.damaged_protogen.offhand_mulfunction": "§cSocket.LeftArm Lost Connection, Rebooting...",
+	"thorigins.damaged_protogen.unstable_socket.tooltip": "[§c-§r] Items in offhand will drop occasionally",
+
+	"thorigins.damaged_protogen.impaired_healing.name": "§cImpaired Healing",
+	"thorigins.damaged_protogen.impaired_healing.description": "Your body has not adjusted to this foreign environment, yet.",
+	"thorigins.damaged_protogen.impaired_healing.tooltip": "[§c/§r] Nanites-Aided Natural Regeneration Disabled\n[§c-§r] Reduced natural regeneration speed",
+
+	"thorigins.damaged_protogen.nutricient_loophole.name": "§cNutricient Loophole",
+	"thorigins.damaged_protogen.nutricient_loophole.description": "The food digesting nanites have not work out how to decompose these foods.",
+	"thorigins.damaged_protogen.nutricient_loophole.tooltip": "[§c/§r] Perfect Digestion Disabled\n[§c-§r] Base Exhaustion increased",
+
+	"thorigins.damaged_protogen.upgrade.starting": "§3§lSelf-Fixing Completed, Registering New Components.",
+	"thorigins.damaged_protogen.upgrade.initialising": "§9§lInitialising",
+	"thorigins.damaged_protogen.upgrade.ready": "§3§lSystem Ready",
+	"thorigins.damaged_protogen.upgrade.greet": "§3§lWelcome Back, ",
+
+	"origin.thorigins.healthy_protogen.name": "Functional",
+	"origin.thorigins.healthy_protogen.description": "Although you can't recover to your best state, you are now strong enough to strive in this foreign environment",
+
+	"thorigins.healthy_protogen.extensions.name": "Extensions",
+	"thorigins.healthy_protogen.extensions.description": "Extensions Description"
+}

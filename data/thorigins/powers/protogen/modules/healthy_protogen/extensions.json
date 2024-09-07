@@ -1,0 +1,10 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.healthy_protogen.extensions.name",
+	"description": "thorigins.healthy_protogen.extensions.description",
+	"badges": [],
+
+	"unlocking": {
+		"type": "origins:simple"
+	}
+}

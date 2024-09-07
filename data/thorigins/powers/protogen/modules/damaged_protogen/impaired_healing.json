@@ -1,0 +1,31 @@
+{
+	"type": "origins:modify_healing",
+    "name": "thorigins.damaged_protogen.impaired_healing.name",
+    "description": "thorigins.damaged_protogen.impaired_healing.description",
+    "badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/iii.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.nanites_manipulation.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.impaired_healing.tooltip"
+				}
+			]
+		}
+	],
+
+	"modifier": {
+		"operation": "multiply_base",
+		"value": -0.5,
+		"name": "Damaged Protogen Modifier"
+	}
+}

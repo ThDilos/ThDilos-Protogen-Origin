@@ -1,0 +1,15 @@
+1. I suck @ making swords
+2. Swords are the first few things I made in BlockBench
+3. try placing these stuffs on your head lmao
+ive had way too much fun with this
+
+I'm aware that the bottom texture of the titanic nanite bottle is kinda messed up
+I know how to fix but I don wanna
+its so cool looking this way lmfao
+
+Models(Not Containing Any Functionalities):
+Fractured Nanite Sword: /give @s golden_sword{CustomModelData:159753}
+Synchronized Nanite Sword: /give @s golden_sword{CustomModelData:159754}
+Bottle o' Nanite: /give @s compass{CustomModelData:159753}
+Titanic Bottle o' Nanite: /give @s compass{CustomModelData:159754}
+Protogen Origin Icon: /give @s compass{CustomModelData:159752}

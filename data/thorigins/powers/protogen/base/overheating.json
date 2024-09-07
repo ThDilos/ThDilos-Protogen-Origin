@@ -1,0 +1,914 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.overheating.name",
+	"description": "thorigins.overheating.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/overheating.png",
+			"text": {
+				"translate": "thorigins.overheating.tooltip"
+			}
+		}
+	],
+
+	"temperature": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 500,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_resource_bar_thermometer.png",
+			"icon_index": 0,
+			"bar_index": 0,
+			"condition": {
+				"type": "origins:or",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 200,
+						"comparison": ">="
+					},
+					{
+						"type": "origins:sneaking"
+					}
+				]
+			}
+		}
+	},
+
+	"notification_300": {
+		"type": "origins:resource",
+		"start_value": 0,
+		"min": 0,
+		"max": 1,
+		"hud_render": { "should_render": false },
+		"max_action": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.overheating.warning_300\"}"
+		}
+	},
+
+	"notification_400": {
+		"type": "origins:resource",
+		"start_value": 0,
+		"min": 0,
+		"max": 1,
+		"hud_render": { "should_render": false },
+		"max_action": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.overheating.warning_400\"}"
+		}
+	},
+
+	"energy_consumption": {
+		"type": "origins:action_over_time",
+		"interval": 20,
+		"entity_action": {
+			"type": "origins:modify_resource",
+			"resource": "*:*_temperature",
+			"modifier": {
+				"operation": "addition",
+				"value": 0,
+				"resource": "*:protogen/base/bioenergy_energy_level",
+				"modifier": {
+					"operation": "multiply_base",
+					"value": 3
+				}
+			}
+		}
+	},
+
+	"muffled_damages": {
+		"type": "origins:modify_damage_dealt",
+		"damage_condition": {
+			"type": "origins:projectile",
+			"inverted": true
+		},
+		"modifier": {
+			"value": 0,
+			"resource": "*:*_temperature",
+			"operation": "multiply_total",
+			"modifier": [
+				{
+					"operation": "addition",
+					"value": -300
+				},
+				{
+					"operation": "multiply_total",
+					"value": -1.0025
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_temperature",
+			"compare_to": 300,
+			"comparison": ">="
+		}
+	},
+
+	"decrement": {
+		"type": "origins:action_over_time",
+		"interval": 10,
+		"entity_action": {
+			"type": "origins:chance",
+			"chance": 0.5,
+			"action": {
+				"type": "origins:change_resource",
+				"resource": "*:*_mulfunctioned_visor",
+				"change": -1
+			}
+		}
+	},
+
+	"mulfunctioned_visor": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 10,
+		"start_value": 10,
+		"min_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_mulfunctioned_visor",
+			"change": 10
+		},
+		"hud_render": { "should_render": false }
+	},
+
+	"screen_overlay_0": {
+		"type": "origins:shader",
+		"shader": "minecraft:shaders/post/art.json",
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_temperature",
+					"compare_to": 450,
+					"comparison": ">="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_mulfunctioned_visor",
+					"compare_to": 6,
+					"comparison": "=="
+				}
+			]
+		}
+	},
+
+	"screen_overlay_1": {
+		"type": "origins:shader",
+		"shader": "minecraft:shaders/post/pencil.json",
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_temperature",
+					"compare_to": 450,
+					"comparison": ">="
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_mulfunctioned_visor",
+					"compare_to": 1,
+					"comparison": "=="
+				}
+			]
+		}
+	},
+
+	"smoke": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_smoke_sequence",
+					"change": 1
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_smoke_sequence",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:*_temperature",
+								"compare_to": 420,
+								"comparison": ">="
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle minecraft:smoke ~ ~1.2 ~ 0 0.2 0 0.08 0"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_smoke_sequence",
+								"compare_to": 25,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:*_temperature",
+								"compare_to": 440,
+								"comparison": ">="
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle minecraft:smoke ~0.2 ~1.2 ~ 0 0.2 0 0.08 0"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_smoke_sequence",
+								"compare_to": 10,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:*_temperature",
+								"compare_to": 460,
+								"comparison": ">="
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle minecraft:smoke ~-0.2 ~1.2 ~ 0 0.2 0 0.08 0"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_smoke_sequence",
+								"compare_to": 40,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:*_temperature",
+								"compare_to": 480,
+								"comparison": ">="
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle minecraft:smoke ~ ~1.2 ~0.2 0 0.2 0 0.08 0"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_smoke_sequence",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:*_temperature",
+								"compare_to": 490,
+								"comparison": ">="
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle minecraft:campfire_cosy_smoke ~ ~1.2 ~-0.2 0 0.2 0 0.08 0"
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_temperature",
+			"compare_to": 400,
+			"comparison": ">="
+		}
+	},
+
+	"smoke_sequence": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 50,
+		"max_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_smoke_sequence",
+			"change": 0,
+			"operation": "set"
+		},
+		"hud_render": { "should_render": false },
+		"start_value": 0
+	},
+
+	"over_heating_panelties": {
+		"type": "origins:action_over_time",
+		"interval": 60,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:play_sound",
+					"sound": "minecraft:block.fire.ambient",
+					"category": "players",
+					"pitch": 0.5,
+					"volume": 0.3
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 400,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:chance",
+						"chance": 0.2,
+						"action": {
+							"type": "origins:apply_effect",
+							"effect": {
+								"effect": "minecraft:darkness",
+								"is_ambient": false,
+								"show_icon": true,
+								"show_particles": false,
+								"amplifier": 0,
+								"duration": 100
+							}
+						}
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 420,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:apply_effect",
+						"effect": {
+							"effect": "minecraft:slowness",
+							"is_ambient": false,
+							"show_icon": true,
+							"show_particles": false,
+							"amplifier": 0,
+							"duration": 200
+						}
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 440,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:apply_effect",
+						"effect": {
+							"effect": "minecraft:nausea",
+							"is_ambient": false,
+							"show_icon": true,
+							"show_particles": false,
+							"amplifier": 0,
+							"duration": 200
+						}
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 480,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:damage",
+						"amount": 2,
+						"damage_type": "minecraft:on_fire"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 490,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:damage",
+						"amount": 4,
+						"damage_type": "minecraft:on_fire"
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_temperature",
+			"compare_to": 400,
+			"comparison": ">"
+		}
+	},
+
+	"active_cooling_system": {
+		"type": "origins:action_over_time",
+		"interval": 20,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_temperature",
+			"change": -8
+		}
+	},
+
+	"temperature_change": {
+		"type": "origins:action_over_time",
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:on_fire"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 30
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:fluid_height",
+						"fluid": "lava",
+						"compare_to": 0,
+						"comparison": ">"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 100
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:in_rain"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -25
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:fluid_height",
+						"fluid": "minecraft:water",
+						"compare_to": 0,
+						"comparison": ">"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -50
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:in_block_anywhere",
+						"block_condition": {
+							"type": "origins:block",
+							"block": "minecraft:powder_snow"
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -100
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "head",
+						"item_condition": {
+							"type": "origins:empty",
+							"inverted": true
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "chest",
+						"item_condition": {
+							"type": "origins:empty",
+							"inverted": true
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "legs",
+						"item_condition": {
+							"type": "origins:empty",
+							"inverted": true
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "feet",
+						"item_condition": {
+							"type": "origins:empty",
+							"inverted": true
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:biome",
+						"condition": {
+							"type": "origins:and",
+							"conditions": [
+								{
+									"type": "origins:temperature",
+									"compare_to": 1.5,
+									"comparison": ">"
+								},
+								{
+									"type": "origins:temperature",
+									"compare_to": 2.0,
+									"comparison": "<="
+								}
+							]
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 8
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:exposed_to_sun"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 3
+					}
+				},
+				{
+					"type": "origins:if_else_list",
+					"actions": [
+						{
+							"condition": {
+								"type": "origins:biome",
+								"condition": {
+									"type": "origins:and",
+									"conditions": [
+										{
+											"type": "origins:temperature",
+											"compare_to": 1.0,
+											"comparison": "<="
+										},
+										{
+											"type": "origins:temperature",
+											"compare_to": 0.5,
+											"comparison": ">"
+										}
+									]
+								}
+							},
+							"action": {
+								"type": "origins:change_resource",
+								"resource": "*:*_temperature",
+								"change": -3
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:biome",
+								"condition": {
+									"type": "origins:and",
+									"conditions": [
+										{
+											"type": "origins:temperature",
+											"compare_to": 0.5,
+											"comparison": "<="
+										},
+										{
+											"type": "origins:temperature",
+											"compare_to": 0.0,
+											"comparison": ">"
+										}
+									]
+								}
+							},
+							"action": {
+								"type": "origins:change_resource",
+								"resource": "*:*_temperature",
+								"change": -7
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:biome",
+								"condition": {
+									"type": "origins:temperature",
+									"compare_to": 0.0,
+									"comparison": "=="
+								}
+							},
+							"action": {
+								"type": "origins:change_resource",
+								"resource": "*:*_temperature",
+								"change": -10
+							}
+						}
+					]
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:sprinting"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 3
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:moving"
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": 1
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "mainhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -5
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "offhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -5
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "mainhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:packed_ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -10
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "offhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:packed_ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -10
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "mainhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:blue_ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -15
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:equipped_item",
+						"equipment_slot": "offhand",
+						"item_condition": {
+							"type": "origins:ingredient",
+							"ingredient": {
+								"item": "minecraft:blue_ice"
+							}
+						}
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_temperature",
+						"change": -15
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 300,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_notification_300",
+						"change": 1
+					},
+					"else_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_notification_300",
+						"change": 0,
+						"operation": "set"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_temperature",
+						"compare_to": 400,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_notification_400",
+						"change": 1
+					},
+					"else_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_notification_400",
+						"change": 0,
+						"operation": "set"
+					}
+				}
+			]
+		}
+	},
+
+	"stay_hydrated": {
+		"type": "origins:action_on_item_use",
+		"item_condition": {
+			"type": "origins:ingredient",
+			"ingredient": {
+				"item": "minecraft:potion"
+			}
+		},
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_temperature",
+			"change": -50
+		}
+	},
+
+	"jump_heating": {
+		"type": "origins:active_self",
+		"cooldown": 3,
+		"key": "key.jump",
+		"hud_render": { "should_render": false },
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_temperature",
+			"change": 2
+		}
+	},
+
+	"respawn_reset": {
+		"type": "origins:action_on_callback",
+		"entity_action_respawned": {
+			"type": "origins:change_resource",
+			"resource": "*:*_temperature",
+			"change": 0,
+			"operation": "set"
+		}
+	}
+}

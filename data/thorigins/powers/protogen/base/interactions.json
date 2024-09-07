@@ -1,0 +1,285 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_interaction_cooldown",
+			"change": -1
+		}
+	},
+
+	"interaction_cooldown": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 60,
+		"hud_render": { "should_render": false }
+	},
+
+	"interactions": {
+		"type": "origins:action_on_being_used",
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:riding",
+					"inverted": true
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_interaction_cooldown",
+					"comparison": "==",
+					"compare_to": 0
+				}
+			]
+		},
+		"bientity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:actor_condition",
+								"condition": {
+									"type": "origins:equipped_item",
+									"equipment_slot": "mainhand",
+									"item_condition": {
+										"type": "origins:empty"
+									}
+								}
+							},
+							{
+								"type": "origins:target_condition",
+								"condition": {
+									"type": "origins:resource",
+									"resource": "*:protogen/base/overheating",
+									"compare_to": 400,
+									"comparison": ">="
+								}
+							}
+						]
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:damage",
+								"amount": 0.5,
+								"damage_type": "minecraft:on_fire"
+							},
+							{
+								"type": "origins:actor_action",
+								"action": {
+									"type": "origins:execute_command",
+									"command": "/tellraw @s {\"translate\":\"thorigins.proto.heated\"}"
+								}
+							},
+							{
+								"type": "origins:target_action",
+								"action": {
+									"type": "origins:change_resource",
+									"resource": "*:*_interaction_cooldown",
+									"change": 60,
+									"operation": "set"
+								}
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:actor_condition",
+								"condition": {
+									"type": "origins:equipped_item",
+									"equipment_slot": "mainhand",
+									"item_condition": {
+										"type": "origins:empty"
+									}
+								}
+							},
+							{
+								"type": "origins:target_condition",
+								"condition": {
+									"type": "origins:sneaking"
+								}
+							}
+						]
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:target_action",
+								"action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:play_sound",
+											"sound": "minecraft:entity.cat.purr",
+											"volume": 0.7,
+											"pitch": 1.2
+										},
+										{
+											"type": "origins:execute_command",
+											"command": "/tag @s add petted"
+										},
+										{
+											"type": "origins:change_resource",
+											"resource": "*:*_interaction_cooldown",
+											"change": 60,
+											"operation": "set"
+										},
+										{
+											"type": "origins:delay",
+											"ticks": 1,
+											"action": {
+												"type": "origins:execute_command",
+												"command": "/tellraw @s {\"text\":\"\",\"extra\":[{\"translate\":\"thorigins.proto.petted\",\"color\":\"light_purple\"},{\"selector\":\"@p[tag=pet]\",\"color\":\"aqua\"}]}"
+											}
+										},
+										{
+											"type": "origins:delay",
+											"ticks": 2,
+											"action": {
+												"type": "origins:execute_command",
+												"command": "/tag @s remove petted"
+											}
+										}
+									]
+								}
+							},
+							{
+								"type": "origins:actor_action",
+								"action": {
+									"type": "apoli:and",
+									"actions": [
+										{
+											"type": "origins:swing_hand",
+											"hand": "MAIN_HAND"
+										},
+										{
+											"type": "origins:execute_command",
+											"command": "/tag @s add pet"
+										},
+										{
+											"type": "origins:delay",
+											"ticks": 1,
+											"action": {
+												"type": "origins:execute_command",
+												"command": "/tellraw @s {\"text\":\"\",\"extra\":[{\"text\":\"Petted \",\"color\":\"light_purple\",\"bold\":\"true\"},{\"selector\":\"@p[tag=petted]\",\"color\":\"aqua\"}]}"
+											}
+										},
+										{
+											"type": "origins:delay",
+											"ticks": 2,
+											"action": {
+												"type": "origins:execute_command",
+												"command": "/tag @s remove pet"
+											}
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:actor_condition",
+						"condition": {
+							"type": "origins:equipped_item",
+							"equipment_slot": "mainhand",
+							"item_condition": {
+								"type": "origins:empty"
+							}
+						}
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:actor_action",
+								"action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:delay",
+											"ticks": 1,
+											"action": {
+												"type": "origins:and",
+												"actions": [
+													{
+														"type": "origins:execute_command",
+														"command": "/tellraw @s {\"text\":\"\",\"extra\":[{\"text\":\"Boop-ed \",\"color\":\"light_purple\",\"bold\":\"true\"},{\"selector\":\"@p[tag=booped]\",\"color\":\"aqua\"}]}"
+													},
+													{
+														"type": "origins:execute_command",
+														"command": "/tellraw @p[tag=booped] {\"text\":\"\",\"color\":\"white\",\"bold\":\"true\",\"italic\":\"false\",\"extra\":[{\"selector\":\"@s\"},{\"text\":\": \"},{\"text\":\"Boop!\",\"italic\":\"true\",\"color\":\"light_purple\"}]}"
+													}
+												]
+											}
+										},
+										{
+											"type": "origins:swing_hand",
+											"hand": "MAIN_HAND"
+										}
+									]
+								}
+							},
+							{
+								"type": "origins:target_action",
+								"action": {
+									"type": "origins:and",
+									"actions": [
+										{
+											"type": "origins:if_else",
+											"condition": {
+												"type": "origins:resource",
+												"resource": "*:*_sound_interaction_ambient",
+												"compare_to": 1,
+												"comparison": "=="
+											},
+											"if_action": {
+												"type": "origins:play_sound",
+												"sound": "minecraft:block.end_portal_frame.fill",
+												"category": "players",
+												"volume": 1,
+												"pitch": 2
+											}
+										},
+										{
+											"type": "origins:change_resource",
+											"resource": "*:*_interaction_cooldown",
+											"change": 20,
+											"operation": "set"
+										},
+										{
+											"type": "origins:execute_command",
+											"command": "/tag @s add booped"
+										},
+										{
+											"type": "origins:delay",
+											"ticks": 2,
+											"action": {
+												"type": "origins:execute_command",
+												"command": "/tag @s remove booped"
+											}
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}

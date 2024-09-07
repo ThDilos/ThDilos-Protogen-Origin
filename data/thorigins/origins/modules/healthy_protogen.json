@@ -1,0 +1,7 @@
+{
+	"powers": ["thorigins:protogen/modules/healthy_protogen/extensions"],
+	"icon": "minecraft:music_disc_cat",
+	"impact": 3,
+	"name": "origin.thorigins.healthy_protogen.name",
+	"description": "origin.thorigins.healthy_protogen.description"
+}

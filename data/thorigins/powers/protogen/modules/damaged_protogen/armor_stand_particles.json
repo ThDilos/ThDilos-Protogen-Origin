@@ -1,0 +1,29 @@
+{
+	"type": "origins:action_over_time",
+	"interval": 1,
+	"entity_action": {
+		"type": "origins:and",
+		"actions": [
+			{
+				"type": "origins:execute_command",
+				"command": "/tp @s ~ ~ ~ ~20 ~"
+			},
+			{
+				"type": "origins:execute_command",
+				"command": "/particle minecraft:end_rod ^ ^-1.2 ^0.8 0 -1 0 0.2 0"
+			},
+			{
+				"type": "origins:execute_command",
+				"command": "/particle minecraft:end_rod ^ ^-1.2 ^-0.8 0 -1 0 0.2 0"
+			},
+			{
+				"type": "origins:execute_command",
+				"command": "/execute unless entity @p[distance=2.8..3.2,nbt={cardinal_components:{\"origins:origin\":{OriginLayers:[{Origin:\"thorigins:modules/damaged_protogen\"}]}}}] run kill @s"
+			},
+			{
+				"type": "origins:execute_command",
+				"command": "/execute if entity @p[distance=2.8..3.2,nbt={cardinal_components:{\"apoli:powers\":{Powers:[{Type:\"thorigins:protogen/modules/damaged_protogen/self_fixing_fixing_timer\",Data:0,Sources:[\"thorigins:modules/damaged_protogen\"]}]}}}] run kill @s"
+			}
+		]
+	}
+}

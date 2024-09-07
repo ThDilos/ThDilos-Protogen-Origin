@@ -1,0 +1,60 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.artificial_limbs.name",
+	"description": "thorigins.artificial_limbs.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/artificial_limbs.png",
+			"text": {
+				"translate": "thorigins.artificial_limbs.tooltip"
+			}
+		}
+	],
+
+	"improved_fall_endurance": {
+		"type": "origins:invulnerability",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "fall"
+		},
+		"condition": {
+			"type": "origins:fall_distance",
+			"compare_to": 12,
+			"comparison": "<="
+		}
+	},
+
+	"reduced_fall_dmg": {
+		"type": "origins:modify_damage_taken",
+		"damage_condition": {
+			"type": "origins:name",
+			"name": "fall"
+		},
+		"modifier": {
+			"value": -0.6,
+			"operation": "multiply_base"
+		},
+		"condition": {
+			"type": "origins:sneaking"
+		}
+	},
+
+	"faster_mining": {
+		"type": "origins:modify_break_speed",
+		"modifier": {
+			"value": 0.2,
+			"operation": "multiply_total",
+			"name": "Protogen Strong Limbs"
+		}
+	},
+
+	"faster_swimming": {
+		"type": "origins:modify_swim_speed",
+		"modifier": {
+			"operation": "multiply_base",
+			"value": 0.2,
+			"name": "Protogen Strong Limbs"
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"credit": "Designed by ThDilos, for Protogen Origin",
+
+	"parent": "item/generated",
+
+	"textures": {
+		"layer0": "item/compass_16"
+	},
+
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 159752
+			},
+			"model": "thorigins/proto_icon"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 159753
+			},
+			"model": "thorigins/bottle_o_nanites"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 159754
+			},
+			"model": "thorigins/bottle_o_nanites_xl"
+		}
+	]
+}

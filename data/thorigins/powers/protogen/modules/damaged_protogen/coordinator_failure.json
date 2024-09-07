@@ -1,0 +1,53 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.damaged_protogen.coordinator_failure.name",
+	"description": "thorigins.damaged_protogen.coordinator_failure.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/vii.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.artificial_limbs.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.coordinator_failure.tooltip"
+				}
+			]
+		}
+	],
+
+	"slowed_movement": {
+		"type": "origins:attribute",
+		"modifier": {
+			"attribute": "minecraft:generic.movement_speed",
+			"operation": "multiply_base",
+			"value": -0.2,
+			"name": "Damaged Protogen Modifier"
+		}
+	},
+
+	"slowed_mining": {
+		"type": "origins:modify_break_speed",
+		"modifier": {
+			"operation": "multiply_base",
+			"value": -0.2,
+			"name": "Damaged Protogen Modifier"
+		}
+	},
+
+	"slowed_swimming": {
+		"type": "origins:modify_swim_speed",
+		"modifier": {
+			"operation": "multiply_base",
+			"value": -0.2,
+			"name": "Damaged Protogen Modifier"
+		}
+	}
+}

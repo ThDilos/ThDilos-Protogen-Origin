@@ -1,0 +1,134 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"fixation_state": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 100,
+		"max_action": {
+			"type": "origins:execute_command",
+			"command": "/function thorigins:complete_self_fix"
+		},
+		"start_value": 0,
+		"hud_render": {
+			"should_render": true,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "*:*_show_fix_timer",
+						"compare_to": 0,
+						"comparison": ">"
+					},
+					{
+						"type": "origins:resource",
+						"resource": "*:*_fixation_state",
+						"compare_to": 100,
+						"comparison": "<"
+					}
+				]
+			}
+		}
+	},
+
+	"show_fix_timer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 100,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_air_superiority": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_assassinator": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_depth_explorer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_final_defence": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_ground_combat": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_medic_specialist": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_ranged_strike": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_resource_gatherer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	},
+
+	"lock_scout_messenger": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": false
+		}
+	}
+}

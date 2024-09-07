@@ -1,0 +1,270 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"notification": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "/tag @s add nanite_infected"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_infestation.start\"}"
+				},
+				{
+					"type": "origins:play_sound",
+					"sound": "minecraft:entity.silverfish.ambient",
+					"category": "players",
+					"pitch": 1.4,
+					"volume": 0.8
+				}
+			]
+		},
+		"entity_action_removed": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_infestation.end\"}"
+		}
+	},
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_duration",
+			"change": -1
+		}
+	},
+
+	"end_condition": {
+		"type": "origins:action_over_time",
+		"interval": 5,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_duration",
+			"change": 1,
+			"operation": "set"
+		},
+		"condition": {
+			"type": "origins:or",
+			"conditions": [
+				{
+					"type": "origins:command",
+					"command": "/execute if entity @a[tag=nanite_controller,distance=..128]",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:fluid_height",
+					"fluid": "lava",
+					"compare_to": 0,
+					"comparison": ">"
+				},
+				{
+					"type": "origins:fluid_height",
+					"fluid": "water",
+					"compare_to": 0,
+					"comparison": ">"
+				},
+				{
+					"type": "origins:on_fire"
+				}
+			]
+		}
+	},
+
+	"duration": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 300,
+		"start_value": 100,
+		"hud_render": {
+			"should_render": false
+		},
+		"min_action": {
+			"type": "origins:execute_command",
+			"command": "/power remove @s thorigins:protogen/nanite_infestation"
+		}
+	},
+
+	"apply_damages": {
+		"type": "origins:action_over_time",
+		"interval": 20,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:inventory",
+						"inventory_types": ["inventory"],
+						"slots": [
+							"armor.head",
+							"armor.chest",
+							"armor.legs",
+							"armor.feet"
+						],
+						"item_condition": {
+							"type": "origins:empty",
+							"inverted": true
+						}
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/damage @s 1 thorigins:nanite by @e[tag=nanite_controller,limit=1,sort=nearest]"
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "head",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "chest",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "legs",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "feet",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "offhand",
+								"action": {
+									"type": "origins:damage",
+									"amount": 5
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "mainhand",
+								"action": {
+									"type": "origins:damage",
+									"amount": 5
+								}
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:item.shield.block player @a ~ ~ ~ 0.5 1.4"
+							}
+						]
+					},
+					"else_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:if_else",
+								"condition": {
+									"type": "origins:entity_type",
+									"entity_type": "minecraft:iron_golem"
+								},
+								"if_action": {
+									"type": "origins:execute_command",
+									"command": "/damage @s 10 thorigins:nanite by @e[tag=nanite_controller,limit=1,sort=nearest]"
+								},
+								"else_action": {
+									"type": "origins:execute_command",
+									"command": "/damage @s 2 thorigins:nanite by @e[tag=nanite_controller,limit=1,sort=nearest]"
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "offhand",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:equipped_item_action",
+								"equipment_slot": "mainhand",
+								"action": {
+									"type": "origins:damage",
+									"amount": 10
+								}
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:entity.silverfish.step player @a ~ ~ ~ 1 1.5"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:skeleton"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:wither_skeleton"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:stray"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "wither"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:blaze"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:iron_golem"
+							},
+							{
+								"type": "origins:entity_type",
+								"entity_type": "minecraft:snow_golem"
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:execute_command",
+						"command": "/particle white_ash ^ ^1 ^ 0 0 0 0.5 30"
+					},
+					"else_action": {
+						"type": "origins:execute_command",
+						"command": "/particle block redstone_block ^ ^1 ^ 0 0 0 0.5 10"
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:health",
+			"compare_to": 0,
+			"comparison": ">"
+		}
+	}
+}

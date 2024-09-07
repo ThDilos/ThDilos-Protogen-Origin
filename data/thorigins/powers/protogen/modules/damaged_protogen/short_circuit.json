@@ -1,0 +1,216 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.damaged_protogen.short_circuit.name",
+	"description": "thorigins.damaged_protogen.short_circuit.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/ix.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.natural_armor.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.short_circuit.tooltip"
+				}
+			]
+		}
+	],
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_shaking_timer",
+			"change": -1
+		}
+	},
+
+	"hurt_by_water": {
+		"type": "origins:action_over_time",
+		"interval": 30,
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:fluid_height",
+						"fluid": "minecraft:water",
+						"compare_to": 0.0,
+						"comparison": ">"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.watered\"}"
+							},
+							{
+								"type": "origins:damage",
+								"damage_type": "origins:hurt_by_water",
+								"amount": 2
+							},
+							{
+								"type": "origins:apply_effect",
+								"effects": [
+									{
+										"effect": "minecraft:darkness",
+										"amplifier": 0,
+										"duration": 100,
+										"is_ambient": true,
+										"show_icon": true,
+										"show_particles": false
+									},
+									{
+										"effect": "minecraft:slowness",
+										"amplifier": 2,
+										"duration": 100,
+										"is_ambient": true,
+										"show_icon": true,
+										"show_particles": false
+									}
+								]
+							},
+							{
+								"type": "origins:spawn_particles",
+								"particle": "minecraft:electric_spark",
+								"count": 5,
+								"offset_y": 0.5,
+								"spread": {
+									"x": 0.7,
+									"y": 0.3,
+									"z": 0.7
+								},
+								"speed": 0.5
+							},
+							{
+								"type": "origins:delay",
+								"ticks": 1,
+								"action": {
+									"type": "origins:spawn_particles",
+									"particle": "minecraft:electric_spark",
+									"count": 5,
+									"offset_y": 0.5,
+									"spread": {
+										"x": 0.7,
+										"y": 0.3,
+										"z": 0.7
+									},
+									"speed": 0.5
+								}
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_shaking_timer",
+								"change": 15
+							},
+							{
+								"type": "origins:play_sound",
+								"sound": "minecraft:entity.guardian.ambient_land",
+								"volume": 0.6,
+								"pitch": 1.6,
+								"category": "players"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:in_rain"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.watered\"}"
+							},
+							{
+								"type": "origins:damage",
+								"damage_type": "origins:hurt_by_water",
+								"amount": 1
+							},
+							{
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:slowness",
+									"amplifier": 0,
+									"duration": 50,
+									"is_ambient": true,
+									"show_icon": true,
+									"show_particles": false
+								}
+							},
+							{
+								"type": "origins:spawn_particles",
+								"particle": "minecraft:electric_spark",
+								"count": 2,
+								"offset_y": 0.5,
+								"spread": {
+									"x": 0.7,
+									"y": 0.3,
+									"z": 0.7
+								},
+								"speed": 0.5
+							},
+							{
+								"type": "origins:delay",
+								"ticks": 1,
+								"action": {
+									"type": "origins:spawn_particles",
+									"particle": "minecraft:electric_spark",
+									"count": 2,
+									"offset_y": 0.5,
+									"spread": {
+										"x": 0.7,
+										"y": 0.3,
+										"z": 0.7
+									},
+									"speed": 0.5
+								}
+							},
+							{
+								"type": "origins:change_resource",
+								"resource": "*:*_shaking_timer",
+								"change": 15
+							},
+							{
+								"type": "origins:play_sound",
+								"sound": "minecraft:entity.guardian.ambient_land",
+								"volume": 0.6,
+								"pitch": 1.6,
+								"category": "players"
+							}
+						]
+					}
+				}
+			]
+		}
+	},
+
+	"shaking_timer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 15,
+		"start_value": 0,
+		"hud_render": { "should_render": false }
+	},
+
+	"shaking_in_short_circuit": {
+		"type": "origins:shaking",
+		"condition": {
+			"type": "origins:resource",
+			"resource": "*:*_shaking_timer",
+			"compare_to": 0,
+			"comparison": ">"
+		}
+	}
+}

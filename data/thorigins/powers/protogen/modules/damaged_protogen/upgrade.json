@@ -1,0 +1,170 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"tick": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_timer",
+					"change": 1
+				},
+				{
+					"type": "origins:if_else_list",
+					"actions": [
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 2,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:blindness",
+									"amplifier": 0,
+									"duration": 110,
+									"is_ambient": false,
+									"show_icon": false,
+									"show_particles": false
+								}
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 30,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\".\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 35,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\"..\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 40,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\"...\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 45,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\".\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 50,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\"..\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 55,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.initialising\"},{\"text\":\"...\"}]"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 60,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.upgrade.ready\"}"
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:resource",
+								"resource": "*:*_timer",
+								"compare_to": 100,
+								"comparison": "=="
+							},
+							"action": {
+								"type": "origins:execute_command",
+								"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/upgrade"
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+
+	"timer": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 100,
+		"max_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.upgrade.greet\"},{\"selector\":\"@s\",\"color\":\"gold\",\"bold\":true}]"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/playsound minecraft:entity.zombie_villager.converted player @s ~ ~ ~ 0.6 2"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/origin set @s thorigins:modules thorigins:modules/healthy_protogen"
+				}
+			]
+		}
+	},
+
+	"starting": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.upgrade.starting\"}"
+		}
+	}
+}

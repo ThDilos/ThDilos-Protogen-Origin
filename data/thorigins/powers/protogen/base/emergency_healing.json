@@ -1,0 +1,145 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"notification": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.emergency_healing.activated\"}"
+				},
+				{
+					"type": "origins:grant_power",
+					"power": "*:protogen/base/energy_refresh",
+					"source": "thorigins:protogen"
+				}
+			]
+		}
+	},
+
+	"heal_effect": {
+		"type": "origins:action_over_time",
+		"interval": 5,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:heal",
+					"amount": 1
+				},
+				{
+					"type": "origins:apply_effect",
+					"effects": [
+						{
+							"effect": "minecraft:regeneration",
+							"amplifier": 0,
+							"duration": 10,
+							"is_ambient": false,
+							"show_icon": true,
+							"show_particles": false
+						},
+						{
+							"effect": "minecraft:hunger",
+							"amplifier": 0,
+							"duration": 10,
+							"is_ambient": false,
+							"show_icon": true,
+							"show_particles": false
+						}
+					]
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:protogen/base/nanites_manipulation_nanites",
+					"change": -100
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/playsound minecraft:entity.experience_orb.pickup player @s ~ ~ ~ 0.4 1.7"
+				}
+			]
+		}
+	},
+
+	"particles": {
+		"type": "origins:particle",
+		"visible_in_first_person": false,
+		"visible_while_invisible": false,
+		"force": false,
+		"frequency": 2,
+		"offset_y": 0.5,
+		"spread": {
+			"x": 0.3,
+			"y": 0.3,
+			"z": 0.3
+		},
+		"speed": 1,
+		"count": 2,
+		"particle": "minecraft:happy_villager"
+	},
+
+	"exit_effect": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_nanites",
+						"compare_to": 100,
+						"comparison": "<"
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.emergency_healing.aborted\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/power remove @s thorigins:protogen/base/emergency_healing"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:relative_health",
+						"compare_to": 0.5,
+						"comparison": ">="
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:entity.player.levelup player @s ~ ~ ~ 0.3 1.8"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.emergency_healing.completed\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/power remove @s thorigins:protogen/base/emergency_healing"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "*:protogen/base/energy_refresh",
+								"source": "thorigins:protogen"
+							}
+						]
+					}
+				}
+			]
+		}
+	}
+}

@@ -1,0 +1,504 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.damaged_protogen.self_fixing.name",
+	"description": "thorigins.damaged_protogen.self_fixing.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/self_fixing.png",
+			"text": [
+				{
+					"translate": "thorigins.generic.press"
+				},
+				{
+					"keybind": "key.origins.primary_active",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.self_fixing.tooltip"
+				}
+			]
+		},
+		{
+			"type": "origins:tooltip",
+			"sprite": "origins:textures/gui/badge/info.png",
+			"text": {
+				"translate": "thorigins.self_fixing.info"
+			}
+		}
+	],
+
+	"initialise_scoreboard": {
+		"type": "origins:action_on_callback",
+		"entity_action_gained": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:execute_command",
+					"command": "/scoreboard objectives add FixationState dummy \"Fixation State\""
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/scoreboard players set @s FixationState 0"
+				}
+			]
+		}
+	},
+
+	"selection_icon": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_bar_point.png",
+			"bar_index": 5,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "*:protogen/base/power_array_selection",
+						"compare_to": 3,
+						"comparison": "=="
+					},
+					{
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/power_array_selection_show_time",
+								"compare_to": 0,
+								"comparison": ">"
+							},
+							{
+								"type": "origins:sneaking"
+							}
+						]
+					}
+				]
+			}
+		}
+	},
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:and",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:*_fixing_timer",
+								"compare_to": 0,
+								"comparison": ">"
+							},
+							{
+								"type": "origins:power_active",
+								"power": "*:*_toggle_fixing",
+								"inverted": true
+							}
+						]
+					},
+					"if_action": {
+						"type": "origins:change_resource",
+						"resource": "*:*_fixing_timer",
+						"change": -10
+					}
+				}
+			]
+		}
+	},
+
+	"commence_fixing": {
+		"type": "origins:active_self",
+		"key": "key.origins.primary_active",
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/power_array_selection",
+					"compare_to": 3,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:1}"
+							},
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:2}"
+							}
+						]
+					},
+					"inverted": true
+				}
+			]
+		},
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:protogen/base/nanites_manipulation_nanites",
+						"compare_to": 5000,
+						"comparison": "<"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.not_enough_nanites\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:food_level",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/bioenergy_energy_level",
+								"compare_to": 5,
+								"comparison": ">"
+							}
+						]
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:moving"
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.self_fix.move\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:constant",
+						"value": true
+					},
+					"action": {
+						"type": "origins:if_else",
+						"condition": {
+							"type": "origins:power_active",
+							"power": "*:*_toggle_fixing"
+						},
+						"if_action": {
+							"type": "origins:and",
+							"actions": [
+								{
+									"type": "origins:change_resource",
+									"resource": "*:*_fixing_timer",
+									"change": -100
+								},
+								{
+									"type": "origins:execute_command",
+									"command": "/kill @e[type=armor_stand,tag=particler,limit=1,distance=..4]"
+								},
+								{
+									"type": "origins:execute_command",
+									"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.self_fix.off\"}"
+								},
+								{
+									"type": "origins:toggle",
+									"power": "*:*_toggle_fixing"
+								},
+								{
+									"type": "origins:grant_power",
+									"power": "*:protogen/base/energy_refresh",
+									"source": "thorigins:protogen"
+								}
+							]
+						},
+						"else_action": {
+							"type": "origins:and",
+							"actions": [
+								{
+									"type": "origins:execute_command",
+									"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.self_fix.on\"}"
+								},
+								{
+									"type": "origins:delay",
+									"ticks": 2,
+									"action": {
+										"type": "origins:execute_command",
+										"command": "/summon armor_stand ~ ~3 ~ {Invisible:1b,Invulnerable:1b,Silent:1b,Tags:[\"particler\"],cardinal_components:{\"apoli:powers\":{Powers:[{Type:\"thorigins:protogen/modules/damaged_protogen/armor_stand_particles\",Data:{},Sources:[\"thorigins:temp\"]}]}}}"
+									}
+								},
+								{
+									"type": "origins:toggle",
+									"power": "*:*_toggle_fixing"
+								},
+								{
+									"type": "origins:change_resource",
+									"resource": "*:protogen/base/bioenergy_energy_level",
+									"change": 5
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	},
+
+	"toggle_fixing": {
+		"type": "origins:toggle",
+		"active_by_default": false,
+		"key": "nuh.uh"
+	},
+
+	"during_fixing_check": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_fixing_timer",
+						"compare_to": 0,
+						"comparison": ">"
+					},
+					"if_action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:block.beacon.ambient player @s ~ ~ ~ 0.7 2"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/tp @e[type=armor_stand,tag=particler,distance=2..4,limit=1,sort=nearest] ~ ~3 ~"
+							}
+						]
+					}
+				},
+				{
+					"type": "origins:if_else_list",
+					"actions": [
+						{
+							"condition": {
+								"type": "origins:moving"
+							},
+							"action": {
+								"type": "origins:and",
+								"actions": [
+									{
+										"type": "origins:change_resource",
+										"resource": "*:*_fixing_timer",
+										"change": -100
+									},
+									{
+										"type": "origins:execute_command",
+										"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.self_fix.move\"}"
+									},
+									{
+										"type": "origins:toggle",
+										"power": "*:*_toggle_fixing"
+									},
+									{
+										"type": "origins:grant_power",
+										"power": "*:protogen/base/energy_refresh",
+										"source": "thorigins:protogen"
+									}
+								]
+							}
+						},
+						{
+							"condition": {
+								"type": "origins:constant",
+								"value": true
+							},
+							"action": {
+								"type": "origins:change_resource",
+								"resource": "*:*_fixing_timer",
+								"change": 1
+							}
+						}
+					]
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:power_active",
+			"power": "*:*_toggle_fixing"
+		}
+	},
+
+	"interrupt_by_damage": {
+		"type": "origins:action_when_damage_taken",
+		"cooldown": 1,
+		"condition": {
+			"type": "origins:power_active",
+			"power": "*:*_toggle_fixing"
+		},
+		"entity_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_fixing_timer",
+					"change": -100
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/kill @e[type=armor_stand,tag=particler,limit=1,distance=..4]"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.damaged_protogen.self_fix.damage\"}"
+				},
+				{
+					"type": "origins:toggle",
+					"power": "*:*_toggle_fixing"
+				},
+				{
+					"type": "origins:grant_power",
+					"power": "*:protogen/base/energy_refresh",
+					"source": "thorigins:protogen"
+				}
+			]
+		}
+	},
+
+	"fixing_timer": {
+		"type": "origins:resource",
+		"min": 0,
+		"start_value": 0,
+		"max": 200,
+		"max_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_fixing_timer",
+					"change": -100
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:protogen/base/nanites_manipulation_nanites",
+					"change": -5000
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"change": 10
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:protogen/base/thtrackers_show_fix_time",
+					"change": 100,
+					"operation": "set"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/kill @e[type=armor_stand,tag=particler,limit=1,distance=..4]"
+				},
+				{
+					"type": "origins:toggle",
+					"power": "*:*_toggle_fixing"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/scoreboard players add @s FixationState 10"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar [{\"translate\":\"thorigins.damaged_protogen.self_fix.complete\"},{\"score\":{\"name\":\"*\",\"objective\":\"FixationState\"},\"color\":\"gold\",\"bold\":true},{\"text\":\"%\",\"color\":\"gold\",\"bold\":true}]"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/power grant @s thorigins:protogen/modules/damaged_protogen/power_refresh thorigins:modules/damaged_protogen"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/playsound minecraft:entity.player.levelup player @s ~ ~ ~ 0.3 1.8"
+				},
+				{
+					"type": "origins:spawn_particles",
+					"particle": "minecraft:wax_off",
+					"count": 10,
+					"speed": 10,
+					"spread": {
+						"x": 0.2,
+						"y": 0.5,
+						"z": 0.2
+					},
+					"offset_y": 0.4
+				},
+				{
+					"type": "origins:spawn_particles",
+					"particle": "minecraft:wax_on",
+					"count": 10,
+					"speed": 10,
+					"spread": {
+						"x": 0.2,
+						"y": 0.5,
+						"z": 0.2
+					},
+					"offset_y": 0.4
+				}
+			]
+		},
+		"min_action": {
+			"type": "origins:grant_power",
+			"power": "*:protogen/base/energy_refresh",
+			"source": "thorigins:protogen"
+		},
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_resource_bar.png",
+			"icon_index": 0,
+			"bar_index": 3,
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:*_fixing_timer",
+				"compare_to": 0,
+				"comparison": ">"
+			}
+		}
+	},
+
+	"reduced_max_health": {
+		"type": "origins:modify_attribute",
+		"attribute": "minecraft:generic.max_health",
+		"modifier": {
+			"operation": "addition",
+			"value": -16,
+			"modifier": {
+				"operation": "addition",
+				"resource": "thorigins:protogen/base/thtrackers_fixation_state",
+				"value": 0,
+				"modifier": {
+					"operation": "multiply_base",
+					"value": -0.84
+				}
+			}
+		}
+	}
+}

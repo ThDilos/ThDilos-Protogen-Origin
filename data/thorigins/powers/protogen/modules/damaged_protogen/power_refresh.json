@@ -1,0 +1,236 @@
+{
+	"type": "origins:action_on_callback",
+	"hidden": true,
+	"entity_action_added": {
+		"type": "origins:and",
+		"actions": [
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 80,
+					"comparison": "<="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/natural_armor_body_armor"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:command",
+								"command": "/power has @s thorigins:protogen/base/natural_armor_body_armor",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							"if_action": {
+								"type": "origins:execute_command",
+								"command": "/power grant @s thorigins:protogen/base/natural_armor_body_armor thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/short_circuit"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 70,
+					"comparison": "<="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/storage_space_storage_space"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:command",
+								"command": "/power has @s thorigins:protogen/base/storage_space_storage_space",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							"if_action": {
+								"type": "origins:execute_command",
+								"command": "/power grant @s thorigins:protogen/base/storage_space_storage_space thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/damaged_storage"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 60,
+					"comparison": "<="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/artificial_limbs"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:power",
+								"power": "thorigins:protogen/base/artificial_limbs",
+								"inverted": true
+							},
+							"if_action": {
+								"type": "origins:grant_power",
+								"power": "thorigins:protogen/base/artificial_limbs",
+								"source": "thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/coordinator_failure"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 50,
+					"comparison": "<="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/visor_enhanced_vision_night_vision_sfx"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:command",
+								"command": "/power has @s thorigins:protogen/base/visor_enhanced_vision_night_vision_sfx",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							"if_action": {
+								"type": "origins:execute_command",
+								"command": "/power grant @s thorigins:protogen/base/visor_enhanced_vision_night_vision_sfx thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/mulfunctioned_visor"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 40,
+					"comparison": ">"
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/unstable_socket"
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 20,
+					"comparison": "<="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/nanites_manipulation_nanite_aided_healing"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:command",
+								"command": "/power has @s thorigins:protogen/base/nanites_manipulation_nanite_aided_healing",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							"if_action": {
+								"type": "origins:execute_command",
+								"command": "/power grant @s thorigins:protogen/base/nanites_manipulation_nanite_aided_healing thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/impaired_healing"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:if_else",
+				"condition": {
+					"type": "origins:resource",
+					"resource": "*:protogen/base/thtrackers_fixation_state",
+					"compare_to": 0,
+					"comparison": "=="
+				},
+				"if_action": {
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/bioenergy_perfect_digestion"
+				},
+				"else_action": {
+					"type": "origins:and",
+					"actions": [
+						{
+							"type": "origins:if_else",
+							"condition": {
+								"type": "origins:command",
+								"command": "/power has @s thorigins:protogen/base/bioenergy_perfect_digestion",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							"if_action": {
+								"type": "origins:execute_command",
+								"command": "/power grant @s thorigins:protogen/base/bioenergy_perfect_digestion thorigins:protogen"
+							}
+						},
+						{
+							"type": "origins:execute_command",
+							"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/nutricient_loophole"
+						}
+					]
+				}
+			},
+			{
+				"type": "origins:execute_command",
+				"command": "/power remove @s thorigins:protogen/modules/damaged_protogen/power_refresh"
+			}
+		]
+	}
+}

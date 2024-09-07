@@ -1,0 +1,452 @@
+{
+	"type": "origins:multiple",
+	"name": "thorigins.visor_enhanced_vision.name",
+	"description": "thorigins.visor_enhanced_vision.description",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/visor_enhanced_vision.png",
+			"text": [
+				{
+					"translate": "thorigins.generic.press"
+				},
+				{
+					"keybind": "key.origins.primary_active",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.visor_enhanced_vision.tooltip0"
+				},
+				{
+					"text": "\n\n"
+				},
+				{
+					"translate": "thorigins.generic.press"
+				},
+				{
+					"keybind": "key.origins.secondary_active",
+					"color": "yellow"
+				},
+				{
+					"translate": "thorigins.visor_enhanced_vision.tooltip1"
+				}
+			]
+		}
+	],
+
+	"selection_icon": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 1,
+		"start_value": 1,
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_bar_point.png",
+			"bar_index": 4,
+			"condition": {
+				"type": "origins:and",
+				"conditions": [
+					{
+						"type": "origins:resource",
+						"resource": "*:protogen/base/power_array_selection",
+						"compare_to": 1,
+						"comparison": "=="
+					},
+					{
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/power_array_selection_show_time",
+								"compare_to": 0,
+								"comparison": ">"
+							},
+							{
+								"type": "origins:sneaking"
+							}
+						]
+					}
+				]
+			}
+		}
+	},
+
+	"night_vision": {
+		"type": "origins:night_vision",
+		"strength": 1,
+		"condition": {
+			"type": "origins:power_active",
+			"power": "*:*_night_vision_switch"
+		}
+	},
+
+	"night_vision_switch": {
+		"type": "origins:toggle",
+		"active_by_default": false,
+		"retain_state": false,
+		"key": "nuh.uh"
+	},
+
+	"night_vision_sfx": {
+		"type": "origins:active_self",
+		"key": "key.origins.secondary_active",
+		"cooldown": 20,
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:*_night_vision_switch"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:toggle",
+								"power": "*:*_night_vision_switch"
+							},
+							{
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:blindness",
+									"duration": 10,
+									"amplifier": 0,
+									"show_icon": false,
+									"show_particles": false,
+									"is_ambient": false
+								}
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.night_vision_off\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:block.beacon.deactivate player @s ~ ~ ~ 0.6 1.8"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "*:protogen/base/energy_refresh",
+								"source": "thorigins:protogen"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:food_level",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/bioenergy_energy_level",
+								"compare_to": 9,
+								"comparison": ">"
+							}
+						]
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:constant",
+						"value": true
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:toggle",
+								"power": "*:*_night_vision_switch"
+							},
+							{
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:blindness",
+									"duration": 10,
+									"amplifier": 0,
+									"show_icon": false,
+									"show_particles": false,
+									"is_ambient": false
+								}
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.night_vision_on\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:block.beacon.activate player @s ~ ~ ~ 0.6 1.8"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "*:protogen/base/energy_refresh",
+								"source": "thorigins:protogen"
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/power_array_selection",
+					"compare_to": 1,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:1}"
+							},
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:2}"
+							}
+						]
+					},
+					"inverted": true
+				}
+			]
+		}
+	},
+
+	"life_detector_sfx": {
+		"type": "origins:active_self",
+		"key": "key.origins.primary_active",
+		"cooldown": 20,
+		"entity_action": {
+			"type": "origins:if_else_list",
+			"actions": [
+				{
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:*_life_detector_switch"
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:blindness",
+									"duration": 10,
+									"amplifier": 0,
+									"show_icon": false,
+									"show_particles": false,
+									"is_ambient": false
+								}
+							},
+							{
+								"type": "origins:toggle",
+								"power": "*:*_life_detector_switch"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.life_detection_off\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:block.beacon.deactivate player @s ~ ~ ~ 0.7 1.2"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "*:protogen/base/energy_refresh",
+								"source": "thorigins:protogen"
+							}
+						]
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:food_level",
+								"compare_to": 0,
+								"comparison": "=="
+							},
+							{
+								"type": "origins:resource",
+								"resource": "*:protogen/base/bioenergy_energy_level",
+								"compare_to": 8,
+								"comparison": ">"
+							}
+						]
+					},
+					"action": {
+						"type": "origins:execute_command",
+						"command": "/title @s actionbar {\"translate\":\"thorigins.no_power\"}"
+					}
+				},
+				{
+					"condition": {
+						"type": "origins:constant",
+						"value": true
+					},
+					"action": {
+						"type": "origins:and",
+						"actions": [
+							{
+								"type": "origins:apply_effect",
+								"effect": {
+									"effect": "minecraft:blindness",
+									"duration": 10,
+									"amplifier": 0,
+									"show_icon": false,
+									"show_particles": false,
+									"is_ambient": false
+								}
+							},
+							{
+								"type": "origins:toggle",
+								"power": "*:*_life_detector_switch"
+							},
+
+							{
+								"type": "origins:execute_command",
+								"command": "/title @s actionbar {\"translate\":\"thorigins.life_detection_on\"}"
+							},
+							{
+								"type": "origins:execute_command",
+								"command": "/playsound minecraft:block.beacon.activate player @s ~ ~ ~ 0.7 1.2"
+							},
+							{
+								"type": "origins:grant_power",
+								"power": "*:protogen/base/energy_refresh",
+								"source": "thorigins:protogen"
+							}
+						]
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:protogen/base/power_array_selection",
+					"compare_to": 1,
+					"comparison": "=="
+				},
+				{
+					"type": "origins:equipped_item",
+					"equipment_slot": "mainhand",
+					"item_condition": {
+						"type": "origins:or",
+						"conditions": [
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:1}"
+							},
+							{
+								"type": "origins:nbt",
+								"nbt": "{nanite_sword_lvl:2}"
+							}
+						]
+					},
+					"inverted": true
+				}
+			]
+		}
+	},
+
+	"life_detector_switch": {
+		"type": "origins:toggle",
+		"key": "nuh.uh",
+		"retain_state": false,
+		"active_by_default": false
+	},
+
+	"life_detection": {
+		"type": "origins:entity_glow",
+		"red": 0.5,
+		"green": 1,
+		"blue": 0.5,
+		"bientity_condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:or",
+					"conditions": [
+						{
+							"type": "origins:can_see"
+						},
+						{
+							"type": "origins:distance",
+							"compare_to": 30,
+							"comparison": "<="
+						}
+					]
+				},
+				{
+					"type": "origins:target_condition",
+					"condition": {
+						"type": "origins:living"
+					}
+				}
+			]
+		},
+		"condition": {
+			"type": "origins:power_active",
+			"power": "*:*_life_detector_switch"
+		}
+	},
+
+	"screen_overlay": {
+		"type": "origins:shader",
+		"shader": "minecraft:shaders/post/sobel.json",
+		"condition": {
+			"type": "origins:power_active",
+			"power": "*:*_life_detector_switch"
+		}
+	},
+
+	"respawn_reset": {
+		"type": "origins:action_on_callback",
+		"entity_action_respawned": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:*_life_detector_switch"
+					},
+					"if_action": {
+						"type": "origins:toggle",
+						"power": "*:*_life_detector_switch"
+					}
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:power_active",
+						"power": "*:*_night_vision_switch"
+					},
+					"if_action": {
+						"type": "origins:toggle",
+						"power": "*:*_night_vision_switch"
+					}
+				}
+			]
+		}
+	}
+}

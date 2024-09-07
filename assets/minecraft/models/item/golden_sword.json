@@ -1,0 +1,24 @@
+{
+	"credit": "Designed by ThDilos, for Protogen Origin",
+
+	"parent": "item/handheld",
+
+	"textures": {
+		"layer0": "item/golden_sword"
+	},
+
+	"overrides": [
+		{
+			"predicate": {
+				"custom_model_data": 159753
+			},
+			"model": "thorigins/nanite_sword_broken"
+		},
+		{
+			"predicate": {
+				"custom_model_data": 159754
+			},
+			"model": "thorigins/nanite_sword"
+		}
+	]
+}

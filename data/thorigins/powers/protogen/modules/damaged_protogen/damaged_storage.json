@@ -1,0 +1,59 @@
+{
+	"type": "origins:inventory",
+	"name": "thorigins.damaged_protogen.damaged_storage.name",
+	"badges": [
+		{
+			"type": "origins:tooltip",
+			"sprite": "thorigins:textures/gui/viii.png",
+			"text": [
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_0"
+				},
+				{
+					"translate": "thorigins.storage_space.name"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.tooltip.generic_1"
+				},
+				{
+					"translate": "thorigins.damaged_protogen.damaged_storage.tooltip"
+				}
+			]
+		}
+	],
+	"description": "thorigins.damaged_protogen.damaged_storage.description",
+	"key": "key.origins.primary_active",
+	"container_type": "dispenser",
+	"drop_on_death": false,
+	"recoverable": true,
+	"title": "thorigins.damaged_protogen.damaged_storage.title",
+	"condition": {
+		"type": "origins:and",
+		"conditions": [
+			{
+				"type": "origins:resource",
+				"resource": "*:protogen/base/power_array_selection",
+				"compare_to": 2,
+				"comparison": "=="
+			},
+			{
+				"type": "origins:equipped_item",
+				"equipment_slot": "mainhand",
+				"item_condition": {
+					"type": "origins:or",
+					"conditions": [
+						{
+							"type": "origins:nbt",
+							"nbt": "{nanite_sword_lvl:1}"
+						},
+						{
+							"type": "origins:nbt",
+							"nbt": "{nanite_sword_lvl:2}"
+						}
+					]
+				},
+				"inverted": true
+			}
+		]
+	}
+}

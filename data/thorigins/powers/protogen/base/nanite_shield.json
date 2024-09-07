@@ -1,0 +1,173 @@
+{
+	"type": "origins:multiple",
+	"hidden": true,
+
+	"notification": {
+		"type": "origins:action_on_callback",
+		"entity_action_added": {
+			"type": "origins:execute_command",
+			"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_shield.activated\"}"
+		}
+	},
+
+	"auto_decrement": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:change_resource",
+			"resource": "*:*_shield_effect_cd",
+			"change": -1
+		}
+	},
+
+	"shield_count": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 5,
+		"start_value": 5,
+		"min_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:play_sound",
+					"sound": "minecraft:item.shield.break",
+					"category": "players",
+					"pitch": 1.5,
+					"volume": 0.8
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/title @s actionbar {\"translate\":\"thorigins.nanite_shield.depleted\"}"
+				},
+				{
+					"type": "origins:execute_command",
+					"command": "/power remove @s thorigins:protogen/base/nanite_shield"
+				}
+			]
+		},
+		"hud_render": {
+			"should_render": true,
+			"sprite_location": "thorigins:textures/protogen_bar_point.png",
+			"bar_index": 0,
+			"condition": {
+				"type": "origins:resource",
+				"resource": "*:*_shield_count",
+				"compare_to": 0,
+				"comparison": ">"
+			}
+		}
+	},
+
+	"shield_effect_cd": {
+		"type": "origins:resource",
+		"min": 0,
+		"max": 10,
+		"hud_render": { "should_render": false }
+	},
+
+	"shield_effect": {
+		"type": "origins:modify_damage_taken",
+		"damage_condition": {
+			"type": "origins:attacker",
+			"entity_condition": {
+				"type": "origins:living"
+			}
+		},
+		"condition": {
+			"type": "origins:and",
+			"conditions": [
+				{
+					"type": "origins:resource",
+					"resource": "*:*_shield_count",
+					"compare_to": 0,
+					"comparison": ">"
+				},
+				{
+					"type": "origins:resource",
+					"resource": "*:*_shield_effect_cd",
+					"compare_to": 0,
+					"comparison": "=="
+				}
+			]
+		},
+		"self_action": {
+			"type": "origins:and",
+			"actions": [
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_shield_effect_cd",
+					"change": 10
+				},
+				{
+					"type": "origins:change_resource",
+					"resource": "*:*_shield_count",
+					"change": -1
+				},
+				{
+					"type": "origins:if_else",
+					"condition": {
+						"type": "origins:resource",
+						"resource": "*:*_shield_count",
+						"compare_to": 0,
+						"comparison": "=="
+					},
+					"if_action": {
+						"type": "origins:play_sound",
+						"sound": "minecraft:item.shield.break",
+						"category": "players",
+						"pitch": 1.5,
+						"volume": 0.8
+					},
+					"else_action": {
+						"type": "origins:play_sound",
+						"sound": "minecraft:item.shield.block",
+						"category": "players",
+						"pitch": 1.5,
+						"volume": 0.8
+					}
+				}
+			]
+		},
+		"modifier": {
+			"operation": "multiply_total",
+			"value": -0.5,
+			"modifier": {
+				"operation": "addition",
+				"resource": "*:*_shield_count",
+				"value": 0,
+				"modifier": {
+					"operation": "multiply_total",
+					"value": -1.1
+				}
+			}
+		}
+	},
+
+	"remove_shield_if_dead": {
+		"type": "origins:action_over_time",
+		"interval": 1,
+		"entity_action": {
+			"type": "origins:if_else",
+			"condition": {
+				"type": "origins:nbt",
+				"nbt": "{Health:0.0f}"
+			},
+			"if_action": {
+				"type": "origins:and",
+				"actions": [
+					{
+						"type": "origins:execute_command",
+						"command": "/power remove @s thorigins:protogen/base/nanite_shield"
+					},
+					{
+						"type": "origins:play_sound",
+						"sound": "minecraft:item.shield.break",
+						"category": "players",
+						"pitch": 1.5,
+						"volume": 0.8
+					}
+				]
+			}
+		}
+	}
+}
