@@ -29,3 +29,5 @@ I have finished (unpolished) the Base Protogen. Which includes:
 The next step is literally the creativity coding part, but I'm just too tired to continue.
 
 Actually it can be a complete origin itself right now, but to me it's just forever unfinished
+
+If you somehow stumble upon this repository, and find my Protogen idea interesting. Let me know by starring ig
