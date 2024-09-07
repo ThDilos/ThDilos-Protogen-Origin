@@ -1,7 +1,7 @@
 # ThDilos-Protogen-Origin
 A half-finished origin that I have no time and motivation to continue further.
 
-Feels like it's a waste to keep it for myself. So I uploaded it into Github as a public repo
+Feels like it's a waste to keep it for myself. So I uploaded it into Github as a public repo\
 if you're gonna upload to somewhere, credit my name and Github address plz
 
 Basic Idea:\
