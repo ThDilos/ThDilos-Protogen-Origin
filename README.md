@@ -20,7 +20,8 @@ From as small as mining speed boost to activatable mining laser / explosives etc
 4. A Deep-Sea Exploration Module that give you much mobilities and capabilities when under water.
 5. A Air-Superiority Module that allows you to fly fast and constantly, being able to drop bombs down.
 
-There are many possibilities for modules...\ 
+There are many possibilities for modules...
+
 I have finished (unpolished) the Base Protogen. Which includes:
 - All stages of Damaged Protogen, all the abilities and skills
 - All the way until you are finally fixed and turn into a normal protogen
