@@ -31,7 +31,8 @@ The next step is literally the creativity coding part, but I'm just too tired to
 
 Actually it can be a complete origin itself right now, but to me it's just forever unfinished
 
-If you somehow stumble upon this repository, and find my Protogen idea interesting. Let me know by starring ig
+If you somehow stumble upon this repository, and find my Protogen idea interesting. Let me know\
+I may somehow get motivated after my introvertive ass receives a tiny bit of attention 
 
 
 
