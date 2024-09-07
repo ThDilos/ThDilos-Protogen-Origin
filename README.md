@@ -25,11 +25,11 @@ There are many possibilities for modules...
 I have finished (unpolished) the Base Protogen. Which includes:
 - All stages of Damaged Protogen, all the abilities and skills
 - All the way until you are finally fixed and turn into a normal protogen
+- All the sprites and models for them
 
 The next step is literally the creativity coding part, but I'm just too tired to continue.
 
-Actually it can be a complete origin itself right now, but to me it's just forever unfinished\
-It even has all the custom sprites / models
+Actually it can be a complete origin itself right now, but to me it's just forever unfinished
 
 If you somehow stumble upon this repository, and find my Protogen idea interesting. Let me know by starring ig
 
