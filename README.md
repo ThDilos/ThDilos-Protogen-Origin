@@ -34,8 +34,23 @@ Actually it can be a complete origin itself right now, but to me it's just forev
 If you somehow stumble upon this repository, and find my Protogen idea interesting. Let me know\
 I may somehow get motivated after me introvertive ass receives a tiny bit of attention 
 
+## Some Screenshots
+<img width="2560" height="1440" alt="2025-08-25_16 16 49" src="https://github.com/user-attachments/assets/53a28070-0d3c-40d7-851f-d87bb10ccad5" />
+Default Origin Layer - Protogen
 
+---
 
+<img width="2560" height="1440" alt="2025-08-25_16 17 14" src="https://github.com/user-attachments/assets/d580cdd0-bc71-4bec-9aab-4b6ee3116021" />
+One out of the two Special Sword with abilities attached
+
+---
+
+<img width="2560" height="1440" alt="2025-08-25_16 18 17" src="https://github.com/user-attachments/assets/a58d38cc-d235-4cc7-9655-f7d32f751ad2" />
+Module Origin Layer - Damaged Protogen
+
+The Roman Number denotes [At which fixing this debuff will be removed]
+
+---
 
 Power Introduction\
 Origin Layer: Protogen\
